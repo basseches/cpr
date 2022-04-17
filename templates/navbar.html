@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="icon" href="data:,">
+
+<!-- jquery -->
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>  
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+
+  <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+
+    <title>Hands-On: Learn CPR Fast</title>
+
+  </head>
+  <body>
+    
+
+    
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/">
+          <button type="button" id="home">Home</button>
+        </a>
+
+        <a class="nav-link" href="/learn/intro">
+          <button type="button" id="intro">What is CPR?</button>
+        </a>
+
+        <a class="nav-link" href="/learn/setting">
+          <button type="button" id="setting">Setting the scene</button>
+        </a>
+
+        <a class="nav-link" href="/learn/prep">
+          <button type="button" id="prep">Preparatory steps</button>
+        </a>
+
+        <a class="nav-link" href="/learn/chest">
+          <button type="button" id="chest">Chest compressions</button>
+        </a>
+
+        <a class="nav-link" href="/learn/breaths">
+          <button type="button" id="breaths">Breaths</button>
+        </a>
+
+        <a class="nav-link" href="/quiz">
+          <button type="button" id="quiz">Quiz</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <div class="container">   
+        {% block content %}
+        {% endblock %}
+    </div>
+
+  </body>
+</html>
+
+
+
+

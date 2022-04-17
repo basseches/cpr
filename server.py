@@ -13,12 +13,16 @@ def homepage():
 def view(id=None):
     return render_template('learn.html', id=id)
 
-@app.route('/quiz/<id>')
-def edit(id=None):
-    return render_template('quiz.html', id=id)
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz.html')
+
+@app.route('/quiz/<questionID>')
+def question(questionID=None):
+    return render_template('question.html', questionID=questionID)
 
 @app.route('/quizend')
-def add():
+def quizend():
     return render_template('quizend.html') 
 
 if __name__ == '__main__':
