@@ -1,0 +1,28 @@
+.container {
+    margin: auto;
+    width: 100%;
+}
+
+h1 {
+    font-family:'Franklin Gothic Medium', sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+    color: black;
+}
+
+h2 {
+    font-family: 'Trebuchet MS', sans-serif;
+    margin-top: -5px;
+    font-size: 35px;
+    color: rgb(181, 181, 181);
+}
+
+body {
+    color:rgb(38, 38, 38);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.padding {
+    padding: 20px;
+    margin: 20px;
+}
