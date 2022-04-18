@@ -2,6 +2,21 @@
 
 {% block content %}
 
-<body>Homepafge!</body>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous"/>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Alata"/>
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}"></script>
+
+<img src="/images/logo.jpg">
+
+<div class="padding"></div>
+<div class="middleText">
+    <div class="alata headerFont bold quizHeader">Learn CPR, hands-on (literally).</div>
+    <div class="alata mediumText">Welcome to Hands-On, an interactive introduction to CPR.</div>
+</div><br>
+
+<div class="center">
+    <button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Learn CPR</button>
+</div>
 
 {% endblock %}

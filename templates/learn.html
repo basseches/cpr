@@ -2,6 +2,9 @@
 
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous"/>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Alata"/>
+
 <script type="text/javascript" src="{{ url_for('static', filename = 'learn.js') }}"></script>
 
 <script>
@@ -12,26 +15,29 @@
 <h1>{{title}}</h1>
 
 <div class="row">
-    <div class="col-md-8">
-        <div class="alata headerFont bold quizHeader">{{content.title}}</div>
-        {% for text in content.explanatoryText %}
-        <div class="alata mediumText">{{text}}</div><br>
-        {% endfor %}
-    </div>
-</div><br>
-
+    <div class="alata headerFont bold quizHeader">{{content.title}}</div>
+</div>
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-6">
-        {% for img in content.images %}
-            <img src="{{img}}" class="imageResize">
-        {% endfor %}
-    </div>	  		
-  <div class="col-md-4">
+    {% for text in content.explanatoryText %}
+    <div class="alata mediumText">{{text}}</div><br>
+    {% endfor %}
+</div>
+<div class="row">
+    {% for img in content.images %}
+        <img src="{{img}}" class="imageResize">
+    {% endfor %}
+</div>
+<div class="padding"></div>
+<div class="row">
+    <div class="col-md-6"></div> 
+    <div class="col-md-3">
+        <div id="checkpoint"></div>
+    </div> 		
+    <div class="col-md-3">
       <div>
         <button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Next</button>
       </div>
-  </div>
+    </div>
 </div>
 
 <div id="confirm"></div>

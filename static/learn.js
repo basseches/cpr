@@ -2,6 +2,8 @@ $(document).ready(function(){
     $("#nextbutton").click(function(){
         next()
     });
+
+    makeCheckpoint();
 })
 
 function next() {
@@ -40,5 +42,25 @@ function next() {
     } else {
         location.href = content.nextid;
     }
+
+}
+
+function makeCheckpoint() {
+
+    if (content.checkpoint) {
+
+        let buttondiv = $('<button class="alata greenBackground whiteText startQuiz smallPadding mediumText" id="checkpoint">Checkpoint</button>');
+        $("#checkpoint").append(buttondiv);
+        $("#checkpoint").click(function(){
+            checkpoint()
+        });
+
+    }
+
+}
+
+function checkpoint() {
+
+    location.href = content.checkpointlink;
 
 }

@@ -1,5 +1,5 @@
 $(document).ready(function(){
     $("#nextbutton").click(function(){
-        location.href = "/learn/4"
+        location.href = "/learn/5"
     });
 })

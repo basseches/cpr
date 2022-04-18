@@ -2,29 +2,8 @@
 
 {% block content %}
 
-<div class = "container">
-    <div class = "row"> 
-        <div class = "h1"> 
-            Preparatory steps
-        </div>
-    </div>
-    <div class = "row"> 
-        <div class = "col-md-8">
-            <div> <b>Step 1: </b>Try to find an AED (automated external defibrillator).</div>
-            <div> <b>Step 2: </b>Call 911. </div>
-            <div>Use an AED if accessible. Otherwise, begin manual CPR.</div>
-        </div>
-        <div class = "col-md-3">
-            <img src = "/static/perp2.png" class = "prep2-image-size">
-            <button type = "button">Learn about Chest Compressions</button>
-            <button type = "button"> Checkpoint</button>
-        </div>
-    </div>
-    <div class = "row">
-        <div class = "col-md-3">
-            <img src = "/static/prep1.png" class = "prep1-image-size">
-        </div>
-    </div>
-</div>
+<script type="text/javascript" src="{{ url_for('static', filename = 'prep.js') }}"></script>
+
+<button type = "button" id="nextbutton">Next</button>
 
 {% endblock %}

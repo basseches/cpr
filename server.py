@@ -11,7 +11,7 @@ learnMaterial = {
         "checkpoint": False,
         "title" : "What is CPR?",
         "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
-        "images": ["intro.png"],
+        "images": ["/images/cpr-header.png"],
         "nextid" : "/learn/2"
     },
     "2": {
@@ -19,7 +19,7 @@ learnMaterial = {
         "checkpoint": False,
         "title" : "Should you perform CPR?",
         "explanatoryText":[""],
-        "images": ["setting1.png", "setting2.png"],
+        "images": ["/static/setting1.png", "/static/setting2.png"],
         "nextid" : "/learn/3"
     },
     "3": {
@@ -27,8 +27,9 @@ learnMaterial = {
         "checkpoint": True,
         "title" : "Preparatory Steps",
         "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
-        "images": ["prep1.png", "prep2.png"],
-        "nextid" : "/learn/4"
+        "images": ["/static/prep1.png", "/static/perp2.png"],
+        "nextid" : "/learn/4",
+        "checkpointlink" : "/prep"
 
     },
     "4": {
@@ -36,16 +37,18 @@ learnMaterial = {
         "checkpoint": True,
         "title": "Chest Compressions",
         "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
-        "images" : ["chest.png"],
-        "nextid" : "/learn/5"
+        "images" : ["/images/compressions.gif"],
+        "nextid" : "/learn/5",
+        "checkpointlink" : "/chest"
     },
     "5": {
         "id": "breaths",
         "checkpoint": True,
         "title": "Breaths",
          "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration ≈ 1 second.", "The chest should rise."],
-        "images": ["breath1.png", "breath2.png", "breath3.png"],
-        "nextid" : "/quiz"
+        "images": ["/images/breath1.png", "/images/breath2.png", "/images/breath3.png"],
+        "nextid" : "/quiz",
+        "checkpointlink" : "/breaths"
     }
 }
 
@@ -57,7 +60,7 @@ quizQuestions = {
             "mc": True,
             "categories": ["Administer two breaths", "Try to find an AED", "Begin chest compressions", "Wait for paramedics"],
             "img": "",
-            "topic": "prep",
+            "topic": "3",
             "correctAnswer": "Try to find an AED",
             "correctText": "You got it! The first thing you want to do is try to find an AED.",
             "incorrectText": "Incorrect."
@@ -70,7 +73,7 @@ quizQuestions = {
             "mc": False,
             "categories": [],
             "img": "",
-            "topic": "chest",
+            "topic": "4",
             "correctAnswer": "30",
             "correctText": "Yep! There are 30 chest compression in each set.",
             "incorrectText": "Incorrect."
@@ -83,7 +86,7 @@ quizQuestions = {
             "mc": False,
             "categories": [],
             "img": "https://cdn2.iconfinder.com/data/icons/anatomy-malibu-vol-1/128/Chest-512.png",
-            "topic": "chest",
+            "topic": "4",
             "correctAnswer": 30,
             "correctText": "Way to go! You kept the perfect rate throughout the set.",
             "incorrectText": "Incorrect." 
@@ -96,7 +99,7 @@ quizQuestions = {
             "mc": True,
             "categories": ["1 second", "2 seconds", "4 seconds", "6 seconds"],
             "img": "",
-            "topic": "breaths",
+            "topic": "5",
             "correctAnswer": "1 second",
             "correctText": "Correct! Each rescue breath should last for approximately 1 second.",
             "incorrectText": "Incorrect."
@@ -119,6 +122,18 @@ def homepage():
 @app.route('/tutorial')
 def tutorial():
     return render_template('tutorial.html')
+
+@app.route('/prep')
+def prep():
+    return render_template('prep.html')
+
+@app.route('/chest')
+def chest():
+    return render_template('chest.html')
+
+@app.route('/breaths')
+def breaths():
+    return render_template('breaths.html')
 
 @app.route('/learn/<id>')
 def learn(id = None):
