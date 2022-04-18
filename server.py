@@ -5,8 +5,6 @@ from flask import render_template
 from flask import Response, request, jsonify
 app = Flask(__name__)
 
-# Quiz Data
-
 quizQuestions = {
     "1": {
             "id": "1",
@@ -29,7 +27,9 @@ quizQuestions = {
             "categories": [],
             "img": "",
             "topic": "chest",
-            "correctAnswer": 30
+            "correctAnswer": "30",
+            "correctText": "Yep! There are 30 chest compression in each set.",
+            "incorrectText": "Incorrect."
          },
 
     "3": {
@@ -40,7 +40,9 @@ quizQuestions = {
             "categories": [],
             "img": "",
             "topic": "chest",
-            "correctAnswer": 30
+            "correctAnswer": 30,
+            "correctText": "Way to go! You kept the perfect rate throughout the set.",
+            "incorrectText": "Incorrect." 
          },
 
     "4": {
@@ -90,7 +92,6 @@ def quizEnd():
     return render_template('quizend.html')
 
 # AJAX FUNCTIONS
-
 @app.route('/add_quiz', methods=['POST'])
 def add_quiz():
     global currentID
@@ -108,11 +109,10 @@ def add_quiz():
 
     quizData[str(currentID)] = newQuizTaker
 
-    print(quizData)
-
-    return jsonify(userID = quizData)
+    return jsonify(userID = currentID)
 
 #------------------------------------------------
+
 @app.route('/add_mc', methods=['PUT'])
 def add_mc():
     global currentID
@@ -122,10 +122,8 @@ def add_mc():
     questionID = json_data["questionID"]
     answer = json_data["answer"]
     answerID = json_data["answerID"]
-    topic = topicConversion[json_data["topic"]]
+    topic = json_data["topic"]
 
-    print("hi")
-    print(quizData)
     quizData[str(currentID)]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
@@ -140,7 +138,36 @@ def add_mc():
         quizData[str(currentID)]["areasImprove"].append(topic)
         quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
 
-    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID, test=quizData)
+    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID)
+
+#----------------------------------------------------------
+
+@app.route('/add_text', methods=['PUT'])
+def add_text():
+    global currentID
+    global quizData
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+    answer = json_data["answer"]
+    topic = json_data["topic"]
+
+    quizData[str(currentID)]["q" + questionID] = answer
+
+    correctAnswer = quizQuestions[questionID]["correctAnswer"]
+
+    if correctAnswer == answer:
+        userAnswerCorrect = "Yes"
+        answerText = quizQuestions[questionID]["correctText"]
+        quizData[str(currentID)]["score"] += 2
+    else:
+        userAnswerCorrect = "No"
+        answerText = quizQuestions[questionID]["incorrectText"]
+        quizData[str(currentID)]["areasImprove"].append(topic)
+        quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
+
+    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
+
 
 if __name__ == '__main__':
    app.run(debug = True)
