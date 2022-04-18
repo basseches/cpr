@@ -75,7 +75,7 @@ quizQuestions = {
             "textEntry": False,
             "mc": False,
             "categories": [],
-            "img": "https://raw.githubusercontent.com/ibasseches/cpr/main/images/6329317.png?token=GHSAT0AAAAAABTVK3HJKJWIJTLL2UCP4EG4YS5MB3A",
+            "img": "https://cdn2.iconfinder.com/data/icons/anatomy-malibu-vol-1/128/Chest-512.png",
             "topic": "chest",
             "correctAnswer": 30,
             "correctText": "Way to go! You kept the perfect rate throughout the set.",
