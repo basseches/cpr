@@ -101,6 +101,7 @@ $(document).ready(function(){
 
 	displayChoices()
 	$("#nextQuestion").addClass("isDisabled")
+	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 
 	getAnswer()
 })

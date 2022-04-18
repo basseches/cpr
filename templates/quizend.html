@@ -10,33 +10,21 @@
 	<div class="row">
 	        <div class="col-md-8">
 	            <div class="headerFont bold quizHeader">Quiz Results</div>
-				<div class="alata mediumText"><span class="bold">Congrats!</span> You've finished the CPR quiz with a score of <span class="bold">5/8</span>.</div>
+				<div class="alata mediumText"><span id="resultsIntro" class="bold"></span> You've finished the CPR quiz with a score of <span id="userScore" class="bold"></span>.</div>
 	        </div>
 	</div><br>
 
 	<div class="row">
 	  		<div class="col-md-6">
 	  			<div class="alata mediumText">These topics tripped you up: </div><br>
-	  			<div class="row">
-	  				<div class="col-md-6 alata mediumText">
-	  					Preparatory Steps
-	  				</div>
-	  				<div class="col-md-6">
-	  					<button class="alata greyBackground whiteText quizEndReview">Review this material</button>
-	  				</div>
-	  				
-	  			</div>
+	  			<div id="areasOfImprovement"></div>
 	  		</div>
 	  		<div class="col-md-1"></div>
 	  		<div class="col-md-4">
-	  			<table id="scoreTable" class="alata tableDim">
+	  			<table id="scoreTable" class="alata tableDim smallFont">
 				  <tr>
 				    <th>Name</th>
 				    <th>Score</th>
-				  </tr>
-				  <tr>
-				    <td>Jay Pakala</td>
-				    <td>8/8</td>
 				  </tr>
 				</table>
 	  		</div>
@@ -46,9 +34,5 @@
 	<a href="/quiz">
 		<button class="alata greyBackground whiteText startQuiz smallPadding mediumText"> Take the quiz again </button>
 	</a>
-
-	
-
-	
 
 {% endblock %}

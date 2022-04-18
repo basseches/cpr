@@ -38,9 +38,9 @@ function verifyNumber(textEntry){
 		$("#textResult").addClass("redText")
 		$("#userText").focus()
 
-		return false
+		return false;
 	} else{
-		return true
+		return true;
 	}
 }
 
@@ -87,6 +87,7 @@ $(document).ready(function(){
 	}
 
 	$("#nextQuestion").addClass("isDisabled")
+	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 	$("#userText").focus()
 	getAnswer()
 });
