@@ -63,6 +63,7 @@ $(document).ready(function(){
 	}
 
 	$("#nextQuestion").addClass("isDisabled")
+	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 
 	getAnswer()
 })

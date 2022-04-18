@@ -1,5 +1,5 @@
 function add_quiz(new_user){
-	$.ajax({
+    $.ajax({
         type: "POST",
         url: "add_quiz",                
         dataType : "json",
@@ -18,11 +18,28 @@ function add_quiz(new_user){
 }
 
 $(document).ready(function(){
-	$("#startQuizBtn").click(function() {
-		let quiztaker = {
+    $("#userName").focus()
+
+    $("#startQuizBtn").click(function() {
+        let quiztaker = {
             "name": userName.value
         }
 
-		add_quiz(quiztaker)
-	});
+        add_quiz(quiztaker)
+    });
+
+    $("#userName").keyup(function(event){
+        let keycode = (event.keyCode ? event.keyCode : event.which);
+
+        if(keycode == '13'){
+            let quiztaker = {
+                "name": userName.value
+            }
+
+            add_quiz(quiztaker)
+            window.location.href = "/quiz/1"
+        };
+
+        event.stopPropagation();
+    });
 });
