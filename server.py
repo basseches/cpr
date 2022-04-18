@@ -11,25 +11,25 @@ learnMaterial = {
         "title" : "What is CPR?",
         "explanatoryText" : "Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating. According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest.",
         "images": ["intro.png"]
-    }
+    },
     "2": {
         "id": "setting",
         "title" : "Should you perform CPR?",
         "explanatoryText":"",
         "images": ["setting1.png", "setting2.png"],
-    }
+    },
     "3": {
         "id" : "prep",
         "title" : "Preparatory Steps",
         "explanatoryText":"Step 1: Try to find an AED (automated external defibrillator).Step 2: Call 911.Use an AED if accessible. Otherwise, begin manual CPR.",
         "images": ["prep1.png", "prep2.png"]
-    }
+    },
     "4": {
         "id": "chest",
         "title": "Chest Compressions",
         "explanatoryText" : " Center your hands on the chest. Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees. Allow the chest to return to a normal position after each compression.",
         "images" : ["chest.png"]
-    }
+    },
     "5": {
         "id": "breaths",
         "title": "Breaths",
@@ -109,7 +109,7 @@ topicConversion = {"about": "What is CPR",
 
 @app.route('/')
 def homepage():
-   return render_template('homepage.html') 
+   return render_template('home.html') 
 
 @app.route('/tutorial')
 def tutorial():
