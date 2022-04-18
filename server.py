@@ -113,6 +113,8 @@ topicConversion = {"prep": "Preparatory steps checkpoint",
     "chest": "Chest compressions checkpoint",
     "breaths": "Breaths checkpoint"}
 
+topicConversionDic = {"5": "Breaths", "4": "Chest compressions", "3": "Preparatory steps"}
+
 # ROUTES
 
 @app.route('/')
@@ -298,7 +300,7 @@ def get_results():
     areasFull = []
 
     for area in userAreasToImprove:
-        areasFull.append(topicConversion[area])
+        areasFull.append(topicConversionDic[area])
 
 
     currentID += 1
