@@ -312,6 +312,10 @@ def top_scorers():
 
     return jsonify(names = names, scores = scores)
 
+#----------------------------------------------------------------------------
+#LEARN AJAX FUNCTIONS
+
+
 
 if __name__ == '__main__':
    app.run(debug = True)

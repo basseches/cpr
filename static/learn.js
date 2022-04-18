@@ -3,9 +3,12 @@ function display_page(){
         if(value["id"] == title){
             console.log(value)
             var title_div = "<div>" + value["title"] + "</div>"
-            var text_div = "<div>" + value["explanatoryText"] + "</div>"
             $("#title").append(title_div);
-            $("#text").append(text_div);
+            for (txt of value["explanatoryText"]){
+                var text_div = "<div>" + txt + "</div>"
+                $("#text").append(text_div);
+            }
+            
             for(image of value["images"]){
                 console.log(image)
                 var image_div = "<div><img src= '"+image+"'></div>"
