@@ -2,9 +2,36 @@
 
 {% block content %}
 
+<script type="text/javascript" src="{{ url_for('static', filename = 'learn.js') }}"></script>
+
+<script>
+    let content = {{content|tojson}}
+</script>
+
 <div class="padding"></div>
 <h1>{{title}}</h1>
 
-<body>Hello!</body>
+<div class="row">
+    <div class="col-md-8">
+        <div class="alata headerFont bold quizHeader">{{content.title}}</div>
+        <div class="alata mediumText">{{content.explanatoryText}}</div>
+    </div>
+</div><br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+        {% for img in content.images %}
+            <img src="{{img}}" class="imageResize">
+        {% endfor %}
+    </div>	  		
+  <div class="col-md-4">
+      <div>
+        <button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Next</button>
+      </div>
+  </div>
+</div>
+
+<div id="confirm"></div>
 
 {% endblock %}

@@ -1,22 +1,44 @@
-function display_page(){
-    $.each(learningMaterial, function(index, value){
-        if(value["id"] == title){
-            console.log(value)
-            var title_div = "<div>" + value["title"] + "</div>"
-            var text_div = "<div>" + value["explanatoryText"] + "</div>"
-            $("#title").append(title_div);
-            $("#text").append(text_div);
-            for(image of value["images"]){
-                console.log(image)
-                var image_div = "<div><img src= '"+image+"'></div>"
-                $("#images").append(image_div);
-            }
-            var button_div = "<div><button type ='button'>"+learningMaterial[index + 1]+"</button>"
-            $("#nextbutton").append(button_div)
-        }
-    })
-}
-
 $(document).ready(function(){
-    display_page()
+    $("#nextbutton").click(function(){
+        next()
+    });
 })
+
+function next() {
+
+    if (content.checkpoint) {
+
+        let confirmdiv = $('<div id="dialog-confirm" title="">')
+        let p = $("<p>")
+        let spans = $('<span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>')
+        $(p).append(spans)
+        $(p).append("You haven't completed the checkpoint yet. Are you sure you want to continue?")
+        $(confirmdiv).append(p)
+        $("#confirm").append(confirmdiv)
+
+        $( function() {
+            $( "#dialog-confirm" ).dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                "Yes, continue": function() {
+                    location.href = content.nextid;
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+
+                }
+
+                }
+
+            });
+
+        });
+
+    } else {
+        location.href = content.nextid;
+    }
+
+}

@@ -8,38 +8,44 @@ app = Flask(__name__)
 learnMaterial = {
     "1": {
         "id" : "intro",
+        "checkpoint": False,
         "title" : "What is CPR?",
         "explanatoryText" : "Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating. According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest.",
-        "images": ["intro.png"]
+        "images": ["intro.png"],
+        "nextid" : "/learn/2"
     },
     "2": {
         "id": "setting",
+        "checkpoint": False,
         "title" : "Should you perform CPR?",
         "explanatoryText":"",
         "images": ["setting1.png", "setting2.png"],
+        "nextid" : "/learn/3"
     },
     "3": {
         "id" : "prep",
+        "checkpoint": True,
         "title" : "Preparatory Steps",
         "explanatoryText":"Step 1: Try to find an AED (automated external defibrillator).Step 2: Call 911.Use an AED if accessible. Otherwise, begin manual CPR.",
-        "images": ["prep1.png", "prep2.png"]
+        "images": ["prep1.png", "prep2.png"],
+        "nextid" : "/learn/4"
     },
     "4": {
         "id": "chest",
+        "checkpoint": True,
         "title": "Chest Compressions",
         "explanatoryText" : " Center your hands on the chest. Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees. Allow the chest to return to a normal position after each compression.",
-        "images" : ["chest.png"]
+        "images" : ["chest.png"],
+        "nextid" : "/learn/5"
     },
     "5": {
         "id": "breaths",
+        "checkpoint": True,
         "title": "Breaths",
         "explanatoryText": "Open the airways. Tilt their head back. Lift their chin. Administer 2 rescue breaths. Duration ≈ 1 second.The chest should rise",
-        "images": ["breath1.png", "breath2.png", "breath3.png"]
+        "images": ["breath1.png", "breath2.png", "breath3.png"],
+        "nextid" : "/quiz"
     }
-}
-
-checpoints = {
-    
 }
 
 quizQuestions = {
@@ -99,11 +105,9 @@ quizQuestions = {
 currentID = 1
 quizData = {}
 
-topicConversion = {"about": "What is CPR",
-    "scene": "Setting the scene",
-    "prep": "Preparatory steps",
-    "chest": "Chest compressions",
-    "breaths": "Breaths"}
+topicConversion = {"prep": "Preparatory steps checkpoint",
+    "chest": "Chest compressions checkpoint",
+    "breaths": "Breaths checkpoint"}
 
 # ROUTES
 
@@ -115,19 +119,17 @@ def homepage():
 def tutorial():
     return render_template('tutorial.html')
 
-@app.route('/learn/<topic>')
-def learn(topic = None):
+@app.route('/learn/<id>')
+def learn(id = None):
     
-    title = topicConversion.get(topic)
-    if title == None:
+    content = learnMaterial[id]
+    if content == None:
         return render_template('notfound.html')
 
-    return render_template('learn.html', title = title)
+    return render_template('learn.html', content = content)
 
 @app.route('/checkpoint/<topic>')
 def checkpt(topic = None):
-
-    title = topicConversion.get(topic, default=None)
 
     if topic == "prep":
         return render_template('prep.html')
