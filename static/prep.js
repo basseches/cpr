@@ -27,8 +27,8 @@ function initializationN(stepsDivs){
     })
 }
 function initializationP(answerDivs){
-    $(".s").empty()
-    $.each(employeePPCDivs, function(index, value) {
+    $(".answers").empty()
+    $.each(answerDivs, function(index, value) {
         var text = (index + 1) + " " + value
         var html_output_element = "<div class='ppc-html-output' data-value="+value+">"+text+"</div>"
         

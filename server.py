@@ -10,7 +10,7 @@ learnMaterial = {
         "id" : "intro",
         "checkpoint": False,
         "title" : "What is CPR?",
-        "explanatoryText" : "Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating. According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest.",
+        "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
         "images": ["intro.png"],
         "nextid" : "/learn/2"
     },
@@ -18,7 +18,7 @@ learnMaterial = {
         "id": "setting",
         "checkpoint": False,
         "title" : "Should you perform CPR?",
-        "explanatoryText":"",
+        "explanatoryText":[""],
         "images": ["setting1.png", "setting2.png"],
         "nextid" : "/learn/3"
     },
@@ -26,15 +26,16 @@ learnMaterial = {
         "id" : "prep",
         "checkpoint": True,
         "title" : "Preparatory Steps",
-        "explanatoryText":"Step 1: Try to find an AED (automated external defibrillator).Step 2: Call 911.Use an AED if accessible. Otherwise, begin manual CPR.",
+        "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
         "images": ["prep1.png", "prep2.png"],
         "nextid" : "/learn/4"
+
     },
     "4": {
         "id": "chest",
         "checkpoint": True,
         "title": "Chest Compressions",
-        "explanatoryText" : " Center your hands on the chest. Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees. Allow the chest to return to a normal position after each compression.",
+        "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
         "images" : ["chest.png"],
         "nextid" : "/learn/5"
     },
@@ -42,7 +43,7 @@ learnMaterial = {
         "id": "breaths",
         "checkpoint": True,
         "title": "Breaths",
-        "explanatoryText": "Open the airways. Tilt their head back. Lift their chin. Administer 2 rescue breaths. Duration ≈ 1 second.The chest should rise",
+         "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration ≈ 1 second.", "The chest should rise."],
         "images": ["breath1.png", "breath2.png", "breath3.png"],
         "nextid" : "/quiz"
     }
@@ -81,7 +82,7 @@ quizQuestions = {
             "textEntry": False,
             "mc": False,
             "categories": [],
-            "img": "https://raw.githubusercontent.com/ibasseches/cpr/main/images/6329317.png?token=GHSAT0AAAAAABTVK3HJKJWIJTLL2UCP4EG4YS5MB3A",
+            "img": "https://cdn2.iconfinder.com/data/icons/anatomy-malibu-vol-1/128/Chest-512.png",
             "topic": "chest",
             "correctAnswer": 30,
             "correctText": "Way to go! You kept the perfect rate throughout the set.",
@@ -313,6 +314,10 @@ def top_scorers():
     scores = [user[1] for user in result]
 
     return jsonify(names = names, scores = scores)
+
+#----------------------------------------------------------------------------
+#LEARN AJAX FUNCTIONS
+
 
 
 if __name__ == '__main__':

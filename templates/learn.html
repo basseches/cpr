@@ -14,7 +14,9 @@
 <div class="row">
     <div class="col-md-8">
         <div class="alata headerFont bold quizHeader">{{content.title}}</div>
-        <div class="alata mediumText">{{content.explanatoryText}}</div>
+        {% for text in content.explanatoryText %}
+        <div class="alata mediumText">{{text}}</div><br>
+        {% endfor %}
     </div>
 </div><br>
 
