@@ -9,7 +9,7 @@ learnMaterial = {
     "1": {
         "id" : "intro",
         "title" : "What is CPR?",
-        "explanatoryText" : "Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating. According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest.",
+        "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
         "images": ["intro.png"]
     },
     "2": {
@@ -21,19 +21,19 @@ learnMaterial = {
     "3": {
         "id" : "prep",
         "title" : "Preparatory Steps",
-        "explanatoryText":"Step 1: Try to find an AED (automated external defibrillator).Step 2: Call 911.Use an AED if accessible. Otherwise, begin manual CPR.",
+        "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911.Use an AED if accessible.", "Otherwise, begin manual CPR."],
         "images": ["prep1.png", "prep2.png"]
     },
     "4": {
         "id": "chest",
         "title": "Chest Compressions",
-        "explanatoryText" : " Center your hands on the chest. Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees. Allow the chest to return to a normal position after each compression.",
+        "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
         "images" : ["chest.png"]
     },
     "5": {
         "id": "breaths",
         "title": "Breaths",
-        "explanatoryText": "Open the airways. Tilt their head back. Lift their chin. Administer 2 rescue breaths. Duration ≈ 1 second.The chest should rise",
+        "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration ≈ 1 second.", "The chest should rise"],
         "images": ["breath1.png", "breath2.png", "breath3.png"]
     }
 }
