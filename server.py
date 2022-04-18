@@ -109,7 +109,7 @@ topicConversion = {"about": "What is CPR",
 
 @app.route('/')
 def homepage():
-   return render_template('homepage.html') 
+   return render_template('home.html') 
 
 @app.route('/tutorial')
 def tutorial():
@@ -264,6 +264,53 @@ def add_img():
         quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
+
+#--------------------------------------------------------------------
+
+@app.route('/get_results', methods=['GET'])
+def get_results():
+    global currentID
+    global quizData
+
+    currentUser = quizData[str(currentID)]
+
+    userScore = currentUser["score"]
+    userAreasToImprove = currentUser["areasImprove"]
+
+    areasFull = []
+
+    for area in userAreasToImprove:
+        areasFull.append(topicConversion[area])
+
+
+    currentID += 1
+
+    return jsonify(quizScore = userScore, areas = userAreasToImprove, areaNames = areasFull)
+
+#----------------------------------------------------------------------------
+
+@app.route('/top_scorers', methods=['GET'])
+def top_scorers():
+    global quizData
+
+    scores = []
+
+    for elem in quizData:
+        curUser = quizData[elem]
+        scores.append((curUser["name"], curUser["score"]))
+
+    withNames = list(filter(lambda x: len(x[0]) > 0, scores))
+    withNames.sort(key = lambda x: x[1], reverse = True)
+
+    if len(withNames) <= 5:
+        result = withNames
+    else:
+        result = withNames[:5]
+
+    names = [user[0] for user in result]
+    scores = [user[1] for user in result]
+
+    return jsonify(names = names, scores = scores)
 
 
 if __name__ == '__main__':
