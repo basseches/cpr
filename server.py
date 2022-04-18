@@ -62,13 +62,44 @@ quizQuestions = {
 currentID = 1
 quizData = {}
 
-topicConversion = {'prep': "Preparatory steps", "chest": "Chest compressions", "breaths": "Breaths"}
+topicConversion = {"about": "What is CPR",
+    "scene": "Setting the scene",
+    "prep": "Preparatory steps",
+    "chest": "Chest compressions",
+    "breaths": "Breaths"}
 
 # ROUTES
 
 @app.route('/')
 def welcome():
    return render_template('home.html')
+
+@app.route('/tutorial')
+def tutorial():
+    return render_template('tutorial.html')
+
+@app.route('/learn/<topic>')
+def learn(topic = None):
+    
+    title = topicConversion.get(topic)
+    if title == None:
+        return render_template('notfound.html')
+
+    return render_template('learn.html', title = title)
+
+@app.route('/checkpoint/<topic>')
+def checkpt(topic = None):
+
+    title = topicConversion.get(topic, default=None)
+
+    if topic == "prep":
+        return render_template('prep.html')
+    elif topic == "chest":
+        return render_template('chest.html')
+    elif topic == "breaths":
+        return render_template('breaths.html')
+
+    return render_template('notfound.html')
 
 @app.route('/quiz')
 def quizHome():
