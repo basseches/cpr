@@ -7,11 +7,27 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-   return render_template('homepage.html')   
+   return render_template('homepage.html') 
 
-@app.route('/learn/<id>', methods=['GET', 'POST'])
-def view(id=None):
-    return render_template('learn.html', id=id)
+@app.route('/intro')
+def intro():
+    return render_template('intro.html')
+
+@app.route('/setting')
+def setting():
+    return render_template('setting.html')
+
+@app.route('/prep')
+def prep():
+    return render_template('prep.html')
+
+@app.route('/chest')
+def chest():
+    return render_template('chest.html')
+
+@app.route('/breaths')
+def breaths():
+    return render_template('breaths.html')
 
 @app.route('/quiz')
 def quiz():

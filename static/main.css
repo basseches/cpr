@@ -26,3 +26,23 @@ body {
     padding: 20px;
     margin: 20px;
 }
+
+.setting1-image-size { 
+    height: 500px;
+    width:auto;
+
+}
+
+.setting2-image-size {
+    height: 300px;
+    width: auto;
+}
+
+.prep2-image-size {
+    height: 300px;
+    width: auto;
+}
+.prep1-image-size {
+    height: 300px;
+    width: auto;
+}
