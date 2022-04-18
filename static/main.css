@@ -26,3 +26,178 @@ body {
     padding: 10px;
     margin: 10px;
 }
+
+/*Jay's CSS Stuff*/
+.bold{
+    font-weight: bold;
+}
+
+.alata{
+    font-family: Alata;
+}
+
+.bebasNeue{
+    font-family: Bebas Neue;
+}
+
+.greyBackground{
+    background-color: grey;
+}
+
+.greenBackground{
+    background-color: #71BC78;
+}
+
+.yellowBackground{
+    background-color: #F0E68C;
+}
+
+.redBackground{
+    background-color: #F08080;
+}
+
+.lightgreyBackground{
+    background-color: #F8F8F8;
+}
+
+.whiteText{
+    color: white;
+}
+
+.greenText{
+    color: #71BC78;
+}
+
+.redText{
+    color: #F08080;
+}
+
+
+.middleText{
+    text-align: center;
+}
+
+.headerFont{
+    font-size: 60px;
+    font-family: Righteous;
+}
+
+/*------------------------------------------------------------*/
+
+.quizHeader{
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.mediumText{
+    font-size: 25px;
+}
+
+.nameInput{
+    width: 250px;
+    height: 50px;
+    border-radius: 10px;
+    padding-left: 25px;
+    font-size: 20px;
+    border-width: 1px;
+}
+
+.smallPadding{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.startQuiz{
+    width: 280px;
+    border-width: 1px;
+}
+
+.dot {
+  height: 40px;
+  width: 40px;
+  border: 2px;
+  border-color: black;
+  border-style: solid;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotAlign{
+    text-align: right;
+    padding-top: 60px;
+}
+
+.currentQuestion{
+    border: 5px;
+    border-style: solid;
+}
+
+.mcChoice{
+    width: 275px;
+    border-width: 1px;
+    border-radius: 10px;
+    text-align: left;
+    padding-left: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+
+.mcPadding{
+    padding-top:10px;
+    padding-right: 10px;
+}
+
+.quizTransitionPadding{
+    padding-top: 5px;
+}
+
+table{
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  margin-top: 15px;
+  table-layout: fixed;
+}
+
+th, td {
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tableDim{
+    width: 500px;
+}
+
+.quizEndReview{
+    border-width: 1px;
+    width: 200px;
+    height: 40px;
+}
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.2;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.imageResize{
+    height: 250px;
+}
+
+.startButton{
+    width: 150px;
+    height: 105px;
+    border-radius: 10px;
+    font-size: 40px;
+}
+
+.startButtonSpacing{
+    padding-right: 50px;
+}

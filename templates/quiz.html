@@ -1,0 +1,22 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous"/>
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Alata"/>
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'quiz.js') }}"></script>
+
+<div class="quizHeader bold middleText headerFont">Ready to save some lives?</div>
+<div class = "middleText mediumText alata"> Name (optional): </div>
+<div class="middleText smallPadding">
+	<input class="nameInput" type="text" id="userName" placeholder="John Smith">
+</div>
+<div class="middleText smallPadding">
+	<a class="nav-link" href="/quiz/1">
+		<button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="startQuizBtn"> Take the quiz! </button>
+	</a>
+</div>
+
+
+{% endblock %}

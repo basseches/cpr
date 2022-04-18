@@ -38,7 +38,7 @@ quizQuestions = {
             "textEntry": False,
             "mc": False,
             "categories": [],
-            "img": "",
+            "img": "https://raw.githubusercontent.com/ibasseches/cpr/main/images/6329317.png?token=GHSAT0AAAAAABTVK3HJKJWIJTLL2UCP4EG4YS5MB3A",
             "topic": "chest",
             "correctAnswer": 30,
             "correctText": "Way to go! You kept the perfect rate throughout the set.",
@@ -123,6 +123,7 @@ def quizEnd():
     return render_template('quizend.html')
 
 # AJAX FUNCTIONS
+
 @app.route('/add_quiz', methods=['POST'])
 def add_quiz():
     global currentID
@@ -175,6 +176,34 @@ def add_mc():
 
 @app.route('/add_text', methods=['PUT'])
 def add_text():
+    global currentID
+    global quizData
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+    answer = json_data["answer"]
+    topic = json_data["topic"]
+
+    quizData[str(currentID)]["q" + questionID] = answer
+
+    correctAnswer = quizQuestions[questionID]["correctAnswer"]
+
+    if correctAnswer == answer:
+        userAnswerCorrect = "Yes"
+        answerText = quizQuestions[questionID]["correctText"]
+        quizData[str(currentID)]["score"] += 2
+    else:
+        userAnswerCorrect = "No"
+        answerText = quizQuestions[questionID]["incorrectText"]
+        quizData[str(currentID)]["areasImprove"].append(topic)
+        quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
+
+    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
+
+#-----------------------------------------------------------------
+
+@app.route('/add_img', methods=['PUT'])
+def add_img():
     global currentID
     global quizData
 
