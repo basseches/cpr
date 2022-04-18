@@ -1,0 +1,47 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous"/>
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Alata"/>
+
+	<script type="text/javascript" src="{{ url_for('static', filename = 'textQuestion.js') }}"></script>
+
+	<script>
+        let curQuestion = {{question|tojson}}
+    </script>
+
+	<div class="row">
+	        <div class="col-md-8">
+	            <div class="headerFont bold quizHeader">Question {{question.id}}</div>
+				<div class="alata mediumText">{{question.questionText}}</div>
+	        </div>
+	        <div class="col-md-4 dotAlign">
+	        	<span class="dot" id="dot1"></span><br>
+				<span class="dot" id="dot2"></span><br>
+				<span class="dot" id="dot3"></span><br>
+				<span class="dot" id="dot4"></span>
+	        </div>
+	</div><br>
+
+	<div class="row">
+	  		<div class="col-md-8">
+	            <input class="nameInput" type="text" id="userText" placeholder="Enter a number here"><br><br>
+	            <div id="textResult" class="alata mediumText"></div>
+	        </div>
+	        <div class="col-md-4 dotAlign">
+	        	<div>
+		        	<a id="reviewMaterialQuiz">
+		            	<button class="alata greyBackground whiteText startQuiz smallPadding mediumText">Review this material</button>
+		            </a>
+	        	</div>
+
+	        	<div class="quizTransitionPadding">
+		        	<a id="nextQuestion" class="smallPadding">
+						<button class="alata greyBackground whiteText startQuiz smallPadding mediumText"><span id="nextText"></span></button>
+					</a>
+	        	</div>
+	        </div>
+	</div>
+
+{% endblock %}
