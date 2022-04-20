@@ -12,6 +12,7 @@ learnMaterial = {
         "title" : "What is CPR?",
         "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
         "images": ["/static/cpr-header.png"],
+        "imageSizes": ["300px"],
         "nextid" : "/learn/2"
     },
     "2": {
@@ -20,6 +21,7 @@ learnMaterial = {
         "title" : "Should you perform CPR?",
         "explanatoryText":[""],
         "images": ["/static/setting1.png", "/static/setting2.png"],
+        "imageSizes": ["500px", "300px"],
         "nextid" : "/learn/3"
     },
     "3": {
@@ -28,6 +30,7 @@ learnMaterial = {
         "title" : "Preparatory steps",
         "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
         "images": ["/static/prep1.png", "/static/perp2.png"],
+        "imageSizes": ["300px", "200px"],
         "nextid" : "/learn/4",
         "checkpointlink" : "/prep"
 
@@ -37,7 +40,8 @@ learnMaterial = {
         "checkpoint": True,
         "title": "Chest compressions",
         "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
-        "images" : ["/static/compressions.gif"],
+        "images" : ["/static/compressionguide.png", "/static/compressions.gif"],
+        "imageSizes": ["150px", "150px"],
         "nextid" : "/learn/5",
         "checkpointlink" : "/chest"
     },
@@ -45,8 +49,9 @@ learnMaterial = {
         "id": "5",
         "checkpoint": True,
         "title": "Breaths",
-         "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration = approx 1 second.", "The chest should rise."],
+        "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration = approx 1 second.", "The chest should rise."],
         "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
+        "imageSizes": ["200px", "200px", "200px"],
         "nextid" : "/quiz",
         "checkpointlink" : "/breaths"
     }

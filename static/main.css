@@ -359,4 +359,8 @@ th, td {
     top: 400px;
     right: 394px;
 }
+
+.autowid {
+    width: auto;
+}
 /**/
