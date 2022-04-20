@@ -4,8 +4,43 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename = 'chest.js') }}"></script>
 
-<body>Chest!</body>
+<div class="padding"></div>
 
-<button type = "button" id="nextbutton">Next</button>
+<div class="row alata headerFont bold quizHeader">Chest compressions checkpoint</div>
+<div class="row">
+    <div class="col-md-7">
+    <div class="alata mediumText greyText">Click the audio button, then click the start button to practice chest compressions to the beat of <i>Stayin' Alive.</i></div>
+    </div><div class="col-md-5 smallPadding">
+      <audio controls>
+        <source src="/static/stayinalive.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+</div>
+
+<div class="padding"></div>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+        <span class="startButtonSpacing" id="buttonSpan">
+            <button class="bebasNeue lightgreyBackground startButton smallPadding" id="startChestBtn"> Start </button>
+        </span>
+    </div>
+    <div class="col-md-6" id="chestimg"><img src="/static/chest.png" class="imageResize" alt="Picture of a chest"></div>
+</div>
+
+<div class="padding"></div>
+
+<div class="row">
+    <div class="col-md-9"></div> 	
+    <div class="col-md-3">
+      <div>
+        <button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Next</button>
+      </div>
+    </div>
+</div>
+
+<div class="padding"></div>
 
 {% endblock %}

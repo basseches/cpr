@@ -25,7 +25,7 @@ learnMaterial = {
     "3": {
         "id" : "3",
         "checkpoint": True,
-        "title" : "Preparatory Steps",
+        "title" : "Preparatory steps",
         "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
         "images": ["/static/prep1.png", "/static/perp2.png"],
         "nextid" : "/learn/4",
@@ -35,7 +35,7 @@ learnMaterial = {
     "4": {
         "id": "4",
         "checkpoint": True,
-        "title": "Chest Compressions",
+        "title": "Chest compressions",
         "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
         "images" : ["/static/compressions.gif"],
         "nextid" : "/learn/5",
@@ -108,10 +108,6 @@ quizQuestions = {
 
 currentID = 1
 quizData = {}
-
-topicConversion = {"prep": "Preparatory steps checkpoint",
-    "chest": "Chest compressions checkpoint",
-    "breaths": "Breaths checkpoint"}
 
 topicConversionDic = {"5": "Breaths", "4": "Chest compressions", "3": "Preparatory steps"}
 
