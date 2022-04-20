@@ -209,6 +209,10 @@ th, td {
     width: 500px;
 }
 
+.tableDim2 {
+    width:100%;
+}
+
 .quizEndReview{
     border-width: 1px;
     width: 200px;
@@ -261,6 +265,10 @@ th, td {
     margin: 3px;
 }
 
+.miniPadding{
+    padding-top: 5px;
+}
+
 .center img {
     display: block;
     margin-left: auto;
@@ -280,5 +288,25 @@ th, td {
 .results {
     color: rgb(181, 181, 181);
     font-size: 20px;
+}
+
+#chestimg:hover {
+    cursor:pointer;
+}
+
+.draggable {
+    width: 165px;
+    background-color: #71BC78;
+    color: #FFFFFF;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+
+}
+
+.tableText {
+    font-size: 16px;
+    color: white;
+    font-weight: normal;
 }
 /**/
