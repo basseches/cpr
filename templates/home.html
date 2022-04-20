@@ -7,16 +7,22 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}"></script>
 
-<img src="/images/logo.jpg">
+<div class="homecont">
+    <div class="padding"></div>
+    <div class="center">
+        <img src="/static/logo.jpg" class="center" width="200px">
+    </div>
+    <div class="antiPadding"></div>
+    <div class="middleText">
+        <div class="alata headerFont bold quizHeader antiPadding lineHeightAdj">Learn CPR,<br>hands-on (literally).</div>
+        <div class="alata mediumText lineHeightAdj">Welcome to Hands-On, an<br>interactive introduction to CPR.</div>
+    </div>
 
-<div class="padding"></div>
-<div class="middleText">
-    <div class="alata headerFont bold quizHeader">Learn CPR, hands-on (literally).</div>
-    <div class="alata mediumText">Welcome to Hands-On, an interactive introduction to CPR.</div>
-</div><br>
+    <div class="smallPadding"></div>
 
-<div class="center">
-    <button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Learn CPR</button>
+    <div class="center">
+        <button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Learn CPR</button>
+    </div>
 </div>
 
 {% endblock %}

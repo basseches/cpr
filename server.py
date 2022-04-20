@@ -7,15 +7,15 @@ app = Flask(__name__)
 
 learnMaterial = {
     "1": {
-        "id" : "intro",
+        "id" : "1",
         "checkpoint": False,
         "title" : "What is CPR?",
         "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
-        "images": ["/images/cpr-header.png"],
+        "images": ["/static/cpr-header.png"],
         "nextid" : "/learn/2"
     },
     "2": {
-        "id": "setting",
+        "id": "2",
         "checkpoint": False,
         "title" : "Should you perform CPR?",
         "explanatoryText":[""],
@@ -23,7 +23,7 @@ learnMaterial = {
         "nextid" : "/learn/3"
     },
     "3": {
-        "id" : "prep",
+        "id" : "3",
         "checkpoint": True,
         "title" : "Preparatory Steps",
         "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
@@ -33,20 +33,20 @@ learnMaterial = {
 
     },
     "4": {
-        "id": "chest",
+        "id": "4",
         "checkpoint": True,
         "title": "Chest Compressions",
-        "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin’ Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
-        "images" : ["/images/compressions.gif"],
+        "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
+        "images" : ["/static/compressions.gif"],
         "nextid" : "/learn/5",
         "checkpointlink" : "/chest"
     },
     "5": {
-        "id": "breaths",
+        "id": "5",
         "checkpoint": True,
         "title": "Breaths",
-         "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration ≈ 1 second.", "The chest should rise."],
-        "images": ["/images/breath1.png", "/images/breath2.png", "/images/breath3.png"],
+         "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration = approx 1 second.", "The chest should rise."],
+        "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
         "nextid" : "/quiz",
         "checkpointlink" : "/breaths"
     }
@@ -333,8 +333,68 @@ def top_scorers():
     return jsonify(names = names, scores = scores)
 
 #----------------------------------------------------------------------------
-#LEARN AJAX FUNCTIONS
+#SEARCH FUNCTIONALITY
 
+@app.route('/search/<searched>', methods=['GET', 'POST'])
+def search(searched=None):
+
+    titles = []
+    content = []
+    num = 0
+
+    str = searched.lower()
+    length = len(str)
+
+    for item in learnMaterial.values():
+        if str in (item["title"]).lower():
+            num = num + 1
+        else:
+            for text in item["explanatoryText"]:
+                if str in text.lower():
+                    num = num + 1
+
+    for item in learnMaterial.values():
+        start = 0
+        idx = 0
+        result = ""
+        text = item["title"]
+        while (idx <= len(text)):
+            idx = (text.lower()).find(searched.lower(), idx)
+            if (result == ""):
+                if (idx == -1):
+                    break
+                result += "<a href='/learn/" + item["id"] + "'>"
+            if (idx != -1):
+                result += text[start:idx] + "<mark>" + text[idx:(idx+length)] + "</mark>"
+                idx += length
+                start = idx
+            else:
+                result += text[start:len(text)] + "</a><hr>"
+                titles.append(result)
+                break
+        result = ""
+        for word in item["explanatoryText"]:
+            start = 0
+            idx = 0
+            text = word
+            while (idx <= len(text)):
+                idx = (text.lower()).find(searched.lower(), idx)
+                if (result == ""):
+                    if (idx == -1):
+                        break
+                    result += "<a href='/learn/" + item["id"] + "'><i>" + item["title"] + ",</i><br>..."
+                if (idx != -1):
+                    result += text[start:idx] + "<mark>" + text[idx:(idx+length)] + "</mark>"
+                    idx += length
+                    start = idx
+                else:
+                    result += text[start:len(text)] + ", "
+                    break
+        if (result != ""):
+            result = result[0:len(result)-2]
+            result += "...</a><hr>"
+            content.append(result)
+    return render_template('search.html', num=num, learnMaterial=learnMaterial, titles=titles, content=content, searched=searched)
 
 
 if __name__ == '__main__':
