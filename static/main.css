@@ -309,4 +309,54 @@ th, td {
     color: white;
     font-weight: normal;
 }
+
+.absolute {
+    position: absolute;
+    top: 400px;
+    left: 400px;
+  }
+
+.circle2 {
+    cursor: pointer;
+    position: absolute;
+    top: 425px;
+    left: 400px;
+    width: 30px;
+    height: 30px;
+}
+
+.circle3 {
+    cursor: pointer;
+    position: absolute;
+    top: 403px;
+    left: 460px;
+    width: 30px;
+    height: 30px;
+}
+
+.circle1 {
+    cursor: pointer;
+    position: absolute;
+    top: 405px;
+    left: 570px;
+    width: 30px;
+    height: 30px;
+}
+
+.defCursor {
+    cursor:default;
+}
+
+.greybox {
+    padding: 30px;
+    margin: 30px;
+    width: 400px;
+    background-color: rgb(241, 241, 241);
+}
+
+#box {
+    position: absolute;
+    top: 400px;
+    right: 394px;
+}
 /**/
