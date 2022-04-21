@@ -63,6 +63,7 @@ checkpoints = {
         "id": 0,
         "title": "Preparatory steps",
         "text": "Order the following items by precedence (drag and drop):",
+        "learnid": 3,
         "next": "/learn/4"
     },
 
@@ -70,6 +71,7 @@ checkpoints = {
         "id": 1,
         "title": "Chest compressions",
         "text": "Click the audio button, then click the start button to practice chest compressions to the beat of \"Stayin' Alive.\"",
+        "learnid": 4,
         "next": "/learn/5"
     },
 
@@ -77,6 +79,7 @@ checkpoints = {
         "id": 2,
         "title": "Breaths",
         "text": "Click the dots in the right order to perform a rescue breath.",
+        "learnid": 5,
         "next": "/quiz"
     }
 

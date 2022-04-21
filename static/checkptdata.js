@@ -22,6 +22,7 @@ let started = false
 let compressionCt = 0
 let setCt = 0
 
+let timeoutIDs = [];
 
 // BREATHS CHECKPOINT VARIABLES
 
@@ -52,6 +53,10 @@ $(document).ready(function() {
         refreshPage[content.id]();
     });
 
+    let navid = "#" + content.learnid;
+
+    $(navid).addClass("active");
+
 });
 
 function generateLayout() {
@@ -62,7 +67,7 @@ function generateLayout() {
     $("#refcol").append(refbutton);
     let nextbutton = '<button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Next</button>';
     $("#nextcol").append(nextbutton);
-    
+
 }
 
 
@@ -206,7 +211,7 @@ function generateChest() {
     $("#activity").append(row);
     $("#startrow").append(cols);
 
-    let buttonspan = '<span class="startButtonSpacing" id="buttonSpan"><button class="bebasNeue lightgreyBackground startButton smallPadding" id="startChestBtn">Start</button></span>';
+    let buttonspan = '<span class="startButtonSpacing" id="buttonSpan"><button class="bebasNeue lightgreyBackground startButton padding" id="startChestBtn">Start</button></span>';
     $("#start").append(buttonspan);
 
     let image = '<img src="/static/chest.png" class="imageResize" alt="Picture of a chest"></div>';
@@ -236,28 +241,41 @@ function generateChest() {
 function countdown() {
     $("#buttonSpan").html("<div class='padding'><div class='chestNums'>Get ready!</div></div>");
 
-    setTimeout(function(){
+    let id = setTimeout(function(){
         $("#buttonSpan").html("<div class='margin headerFont'>3</div>");
     }, 1000);
 
-    setTimeout(function(){
+    timeoutIDs.unshift(id);
+
+    id = setTimeout(function(){
         $("#buttonSpan").html("<div class='margin headerFont'>2</div>");
     }, 2000);
 
-    setTimeout(function(){
+    timeoutIDs.unshift(id);
+
+    id = setTimeout(function(){
         $("#buttonSpan").html("<div class='margin headerFont'>1</div>");
     }, 3000);
 
-    setTimeout(function(){
+    timeoutIDs.unshift(id);
+
+    id = setTimeout(function(){
         $("#buttonSpan").html("<div class='row margin subheaderFont'>Compressions:</div><div class='row margin chestNums' id='compressions'>" + compressionCt +"</div><div class='row margin subheaderFont'>Sets:</div><div class='row margin chestNums' id='sets'>" + setCt + "</div>");
         started = true
     }, 4000);
+
+    timeoutIDs.unshift(id);
+
 }
 
 function refreshChest() {
 
     $("#activity").empty();
     $("#audio").empty();
+
+    while (typeof (i = timeoutIDs.shift()) !== 'undefined') {
+        clearTimeout(i);
+    }
 
     compressionCt = 0;
     setCt = 0;

@@ -8,6 +8,7 @@ $(document).ready(function(){
     $(navid).addClass("active");
 
     makeCheckpoint();
+    
 });
 
 function next() {
