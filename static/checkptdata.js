@@ -1,0 +1,339 @@
+let htmlbody = [
+    '<div class="row antiPadding"><div class="col-md-4" id="table"></div><div class="col-md-8 miniPadding" id="steps"></div></div><div class="padding"></div>',
+    '<div class="padding"></div><div id="activity"></div><div class="padding"></div>',
+    '</div><div id="images"></div><div id="box"></div><div class="padding"></div><div class="padding"></div><div class="padding"></div><div class="padding"></div>'
+];
+
+// PREPARATORY STEPS CHECKPOINT VARIABLES 
+
+let prepSteps = [
+    "find an AED",
+    "call 911",
+    "use AED",
+    "begin manual CPR"
+]
+
+let displayOrder = [3, 2, 0, 1];
+
+
+// CHEST COMPRESSIONS CHECKPOINT VARIABLES
+
+let started = false
+let compressionCt = 0
+let setCt = 0
+
+
+// BREATHS CHECKPOINT VARIABLES
+
+let click1 = false;
+let click2 = false;
+let click3 = false;
+
+let breathSteps = ["First, tilt the head back.", "Then, lift their chin.", "Finally, administer a one-second long breath."];
+
+
+// array of function pointers (will initialize/refresh the right page given an index)
+let typeInit = [generatePrep, generateChest, generateBreaths];
+let refreshPage = [refreshPrep, refreshChest, refreshBreaths];
+
+$(document).ready(function() {
+
+    generateLayout();
+
+    // initialize the page
+    $("#htmlbody").append(htmlbody[content.id]);
+    typeInit[content.id]();
+
+    $("#nextbutton").click(function(){
+        location.href = content.next;
+    });
+
+    $("#refresh").click(function(){
+        refreshPage[content.id]();
+    });
+
+});
+
+function generateLayout() {
+
+    let cols = '<div class="col-md-6"></div><div class="col-md-3" id="refcol"></div><div class="col-md-3" id="nextcol"></div>';
+    $("#buttondiv").append(cols);
+    let refbutton = '<button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="refresh">Try again</button>';
+    $("#refcol").append(refbutton);
+    let nextbutton = '<button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Next</button>';
+    $("#nextcol").append(nextbutton);
+    
+}
+
+
+// PREPARATORY STEPS CHECKPOINT FUNCTIONS
+
+function generatePrep() {
+
+    shuffle(displayOrder);
+
+    let tableContent = "<table class='alata tableDim2 smallFont nomargin'>";
+    let stepDivs = "";
+    let step;
+    let name = "";
+
+    for (i = 0; i < prepSteps.length; i++) {
+
+        tableContent += "<tr><th>" + (i + 1) + "</th><th id=" + i + "drop></th></tr>";
+        step = displayOrder[i];
+        stepDivs += "<div class='draggable alata whiteText' id=" + step + ">" + prepSteps[step] + "</div>";
+
+    }
+
+    tableContent += "</table>";
+    $("#table").append(tableContent);
+    $("#steps").append(stepDivs);
+    $(".draggable").draggable({revert: "invalid"});
+
+    for (i = 0; i < prepSteps.length; i++) {
+
+        name = "#" + i + "drop";
+
+        $(name).droppable({
+            accept: ".draggable",
+            drop: function( event, ui ) {
+
+                let itemID = parseInt(ui.draggable.attr('id'));
+                if (itemID == parseInt($(this).attr('id'))) {
+                    $( this ).addClass( "greenBackground" );
+                } else {
+                    $( this ).addClass( "redBackground" );
+                }
+
+                ui.draggable.remove();
+                $( this ).html( "<div class='tableText'>" + prepSteps[itemID] + "</div>" );
+
+            }
+        });
+
+    }
+
+    $("#findAED").draggable({revert: "invalid"});
+    $("#manualCPR").draggable({revert: "invalid"});
+    $("#useAED").draggable({revert: "invalid"});
+    $("#call911").draggable({revert: "invalid"});
+
+    $("#findAEDdrop").droppable({
+        accept: ".draggable",
+        drop: function( event, ui ) {
+            if (ui.draggable.attr('id') == "findAED") {
+                $( this )
+                .addClass( "greenBackground" );
+            } else {
+                $( this )
+                .addClass( "redBackground" );
+            }
+        }
+    });
+    $("#manualCPRdrop").droppable({
+        accept: ".draggable",
+        drop: function( event, ui ) {
+            if (ui.draggable.attr('id') == "manualCPR") {
+                $( this )
+                .addClass( "greenBackground" );
+            } else {
+                $( this )
+                .addClass( "redBackground" );
+            }
+        }
+    });
+    $("#useAEDdrop").droppable({
+        accept: ".draggable",
+        drop: function( event, ui ) {
+            if (ui.draggable.attr('id') == "useAED") {
+                $( this )
+                .addClass( "greenBackground" );
+            } else {
+                $( this )
+                .addClass( "redBackground" );
+            }
+        }
+    });
+    $("#call911drop").droppable({
+        accept: "#call911",
+        accept: ".draggable",
+        drop: function( event, ui ) {
+            if (ui.draggable.attr('id') == "call911") {
+                $( this )
+                .addClass( "greenBackground" );
+            } else {
+                $( this )
+                .addClass( "redBackground" );
+            }
+        }
+    });
+
+}
+
+function refreshPrep() {
+    $("#table").html("")
+    $("#steps").html("")
+    generatePrep()
+}
+
+function shuffle(array) {
+
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+
+}
+
+
+// CHEST COMPRESSIONS CHECKPOINT FUNCTIONS
+
+function generateChest() {
+
+    let row = '<div class="row" id="startrow"></div>';
+    let cols = '<div class="col-md-2"></div><div class="col-md-4" id="start"></div><div class="col-md-6" id="chestimg"></div>';
+    $("#activity").append(row);
+    $("#startrow").append(cols);
+
+    let buttonspan = '<span class="startButtonSpacing" id="buttonSpan"><button class="bebasNeue lightgreyBackground startButton smallPadding" id="startChestBtn">Start</button></span>';
+    $("#start").append(buttonspan);
+
+    let image = '<img src="/static/chest.png" class="imageResize" alt="Picture of a chest"></div>';
+    $("#chestimg").append(image);
+
+    let audio = '<audio controls><source src="/static/stayinalive.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>';
+    $("#audio").append(audio);
+
+    $("#startChestBtn").click(function(){
+        countdown();
+        // logTime();
+    });
+
+    $("#chestimg").click(function(){
+        if (started) {
+            compressionCt++;
+            $("#compressions").html(compressionCt);
+            if (compressionCt % 30 == 0) {
+                setCt++;
+                $("#sets").html(setCt);
+            }
+        }
+    });
+
+}
+
+function countdown() {
+    $("#buttonSpan").html("<div class='padding'><div class='chestNums'>Get ready!</div></div>");
+
+    setTimeout(function(){
+        $("#buttonSpan").html("<div class='margin headerFont'>3</div>");
+    }, 1000);
+
+    setTimeout(function(){
+        $("#buttonSpan").html("<div class='margin headerFont'>2</div>");
+    }, 2000);
+
+    setTimeout(function(){
+        $("#buttonSpan").html("<div class='margin headerFont'>1</div>");
+    }, 3000);
+
+    setTimeout(function(){
+        $("#buttonSpan").html("<div class='row margin subheaderFont'>Compressions:</div><div class='row margin chestNums' id='compressions'>" + compressionCt +"</div><div class='row margin subheaderFont'>Sets:</div><div class='row margin chestNums' id='sets'>" + setCt + "</div>");
+        started = true
+    }, 4000);
+}
+
+function refreshChest() {
+
+    $("#activity").empty();
+    $("#audio").empty();
+
+    compressionCt = 0;
+    setCt = 0;
+
+    generateChest();
+
+}
+
+
+// BREATHS CHECKPOINT FUNCTIONS
+
+function generateBreaths() {
+
+    let curr = '<div class="absolute" id="head"><img src="/static/head.png" class="imageResize"></div>';
+    $("#images").append(curr);
+
+    for (i = 1; i < 4; i++) {
+        curr = '<div id="circ' + i + '"><img src="/static/greencircle.png" class="circle' + i + '" id="head"></div>';
+        $("#images").append(curr);
+    }
+
+    $("#circ1").click(function(){
+        if (click1) {return;}
+        click1 = true;
+        let newCirc = "<img src='/static/lightgreencircle.png' class='circle1 defCursor'>";
+        $("#circ1").html(newCirc);
+        let box = "<div class='greybox' id='greybox'><div class='alata'>" + breathSteps[0] + "</div></div>";
+        $("#box").append(box);
+        let tilt = '<img src="/static/tilted.png" class="imageResize">';
+        $("#head").html(tilt);
+    });
+
+    $("#circ2").click(function(){
+        if (click2) {return;}
+        else if (click1) {
+            click2 = true;
+            let newCirc = "<img src='/static/lightgreencircle.png' class='circle2 defCursor'>";
+            $("#circ2").html(newCirc);
+            let text = "<div class='alata'>" + breathSteps[1] + "</div>";
+            $("#greybox").append(text);
+        } else {
+            let newCirc = "<img src='/static/redcircle.png' class='circle2'>";
+            $("#circ2").html(newCirc);
+            setTimeout(function(){
+                newCirc = "<div id='circ2'><img src='/static/greencircle.png' class='circle2'></div>";
+                $("#circ2").html(newCirc);
+            }, 500);
+        }
+    });
+
+    $("#circ3").click(function(){
+        if (click3) {return;}
+        if (click1 && click2) {
+            click3 = true;
+            let newCirc = "<img src='/static/lightgreencircle.png' class='circle3 defCursor'>";
+            $("#circ3").html(newCirc);
+            let text = "<div class='alata'>" + breathSteps[2] + "</div>";
+            $("#greybox").append(text);
+        } else {
+            let newCirc = "<img src='/static/redcircle.png' class='circle3'>";
+            $("#circ3").html(newCirc);
+            setTimeout(function(){
+                newCirc = "<div id='circ2'><img src='/static/greencircle.png' class='circle3'></div>";
+                $("#circ3").html(newCirc);
+            }, 500);
+        }
+    });
+}
+
+function refreshBreaths() {
+
+    $("#images").empty();
+    $("#box").empty();
+    click1 = false;
+    click2 = false;
+    click3 = false;
+    generateBreaths();
+
+}

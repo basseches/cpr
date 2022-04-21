@@ -260,6 +260,11 @@ th, td {
     margin-left:70px;
 }
 
+.nomargin {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
 .smallerPadding{
     padding: 10px;
     margin: 3px;
@@ -356,11 +361,15 @@ th, td {
 
 #box {
     position: absolute;
-    top: 400px;
+    top: 350px;
     right: 394px;
 }
 
 .autowid {
     width: auto;
+}
+
+.rightpad {
+    padding-right: 20px;
 }
 /**/

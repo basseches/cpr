@@ -61,6 +61,6 @@ function makeCheckpoint() {
 
 function checkpoint() {
 
-    location.href = content.checkpointlink;
+    location.href = "/checkpoint" + content.checkpointlink;
 
 }

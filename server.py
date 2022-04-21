@@ -39,7 +39,7 @@ learnMaterial = {
         "id": "4",
         "checkpoint": True,
         "title": "Chest compressions",
-        "explanatoryText" : ["Center your hands on the chest.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees.", "Allow the chest to return to a normal position after each compression."],
+        "explanatoryText" : ["Center your hands on the chest.", "Allow the chest to return to a normal position after each compression.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees."],
         "images" : ["/static/compressionguide.png", "/static/compressions.gif"],
         "imageSizes": ["150px", "150px"],
         "nextid" : "/learn/5",
@@ -49,12 +49,37 @@ learnMaterial = {
         "id": "5",
         "checkpoint": True,
         "title": "Breaths",
-        "explanatoryText": ["Open the airways.", "Tilt their head back.", "Lift their chin.", "Administer 2 rescue breaths.", "Duration = approx 1 second.", "The chest should rise."],
+        "explanatoryText": ["Step 1: Open the airways.", "Step 2: Tilt their head back.", "Step 3: Lift their chin.", "Step 4: Administer 2 rescue breaths.", "The breaths should be approx 1 second in length.", "The chest should rise."],
         "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
         "imageSizes": ["200px", "200px", "200px"],
         "nextid" : "/quiz",
         "checkpointlink" : "/breaths"
     }
+}
+
+checkpoints = {
+
+    "prep": {
+        "id": 0,
+        "title": "Preparatory steps",
+        "text": "Order the following items by precedence (drag and drop):",
+        "next": "/learn/4"
+    },
+
+    "chest": {
+        "id": 1,
+        "title": "Chest compressions",
+        "text": "Click the audio button, then click the start button to practice chest compressions to the beat of \"Stayin' Alive.\"",
+        "next": "/learn/5"
+    },
+
+    "breaths": {
+        "id": 2,
+        "title": "Breaths",
+        "text": "Click the dots in the right order to perform a rescue breath.",
+        "next": "/quiz"
+    }
+
 }
 
 quizQuestions = {
@@ -126,18 +151,6 @@ def homepage():
 def tutorial():
     return render_template('tutorial.html')
 
-@app.route('/prep')
-def prep():
-    return render_template('prep.html')
-
-@app.route('/chest')
-def chest():
-    return render_template('chest.html')
-
-@app.route('/breaths')
-def breaths():
-    return render_template('breaths.html')
-
 @app.route('/learn/<id>')
 def learn(id = None):
     
@@ -145,19 +158,16 @@ def learn(id = None):
     if content == None:
         return render_template('notfound.html')
 
-    return render_template('learn.html', content = content)
+    return render_template('learn.html', content=content)
 
 @app.route('/checkpoint/<topic>')
 def checkpt(topic = None):
 
-    if topic == "prep":
-        return render_template('prep.html')
-    elif topic == "chest":
-        return render_template('chest.html')
-    elif topic == "breaths":
-        return render_template('breaths.html')
+    content = checkpoints[topic]
+    if content == None:
+        return render_template('notfound.html')
 
-    return render_template('notfound.html')
+    return render_template('checkpoint.html', content=content)
 
 @app.route('/quiz')
 def quizHome():

@@ -1,0 +1,28 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'checkptdata.js') }}"></script>
+
+<script>
+  let content = {{content|tojson}}
+</script>
+
+<div class="padding"></div>
+
+<div class="row alata headerFont bold quizHeader">{{content.title}} checkpoint</div>
+<div class="row">
+  <div class="col-md-8 antiPadding">
+      <div class="alata mediumText greyText nomargin rightpad">{{content.text}}</div>
+  </div>
+  <div class="col-md-4 smallPadding" id="audio"></div>
+</div>
+
+<div class="miniPadding"></div>
+<div id="htmlbody"></div>
+
+<div class="row" id="buttondiv"></div>
+
+<div class="padding"></div>
+
+{% endblock %} 
