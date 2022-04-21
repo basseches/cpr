@@ -1,3 +1,9 @@
+$(document).ready(function(){
+
+    $("#quiznav").addClass("active");
+
+});
+
 function add_img(answer){
 	$.ajax({
         type: "PUT",

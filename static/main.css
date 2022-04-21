@@ -372,4 +372,8 @@ th, td {
 .rightpad {
     padding-right: 20px;
 }
+
+.active {
+    color: black;
+}
 /**/

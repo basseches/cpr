@@ -1,3 +1,9 @@
+$(document).ready(function(){
+
+    $("#quiznav").addClass("active");
+
+});
+
 function get_results(){
 	$.ajax({
         type: "GET",

@@ -1,3 +1,9 @@
+$(document).ready(function(){
+
+    $("#quiznav").addClass("active");
+
+});
+
 function add_quiz(new_user){
     $.ajax({
         type: "POST",

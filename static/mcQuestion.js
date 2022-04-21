@@ -1,3 +1,9 @@
+$(document).ready(function(){
+
+    $("#quiznav").addClass("active");
+
+});
+
 function add_mc(answer){
 	$.ajax({
         type: "PUT",

@@ -3,8 +3,12 @@ $(document).ready(function(){
         next()
     });
 
+    let navid = "#" + content.id;
+
+    $(navid).addClass("active");
+
     makeCheckpoint();
-})
+});
 
 function next() {
 

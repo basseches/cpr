@@ -4,6 +4,7 @@ $(document).ready(function(){
         event.preventDefault();
         submitSearch()
     });
+
 })
 
 function submitSearch() {
