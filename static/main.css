@@ -317,14 +317,14 @@ th, td {
 
 .absolute {
     position: absolute;
-    top: 400px;
+    top: 325px;
     left: 400px;
   }
 
 .circle2 {
     cursor: pointer;
     position: absolute;
-    top: 425px;
+    top: 350px;
     left: 400px;
     width: 30px;
     height: 30px;
@@ -333,7 +333,7 @@ th, td {
 .circle3 {
     cursor: pointer;
     position: absolute;
-    top: 403px;
+    top: 328px;
     left: 460px;
     width: 30px;
     height: 30px;
@@ -342,7 +342,7 @@ th, td {
 .circle1 {
     cursor: pointer;
     position: absolute;
-    top: 405px;
+    top: 330px;
     left: 570px;
     width: 30px;
     height: 30px;
@@ -361,7 +361,7 @@ th, td {
 
 #box {
     position: absolute;
-    top: 350px;
+    top: 325px;
     right: 394px;
 }
 

@@ -402,7 +402,7 @@ def search(searched=None):
                     idx += length
                     start = idx
                 else:
-                    result += text[start:len(text)] + ", "
+                    result += text[start:len(text)] + " "
                     break
         if (result != ""):
             result = result[0:len(result)-2]
