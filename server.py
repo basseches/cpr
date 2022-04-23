@@ -139,8 +139,8 @@ quizQuestions = {
          }
 }
 
-currentID = 1
-quizData = {}
+currentID = 0
+userData = {}
 
 topicConversionDic = {"5": "Breaths", "4": "Chest compressions", "3": "Preparatory steps"}
 
@@ -195,31 +195,60 @@ def quizEnd():
 
 # AJAX FUNCTIONS
 
-@app.route('/add_quiz', methods=['POST'])
-def add_quiz():
+@app.route('/add_user', methods=['POST'])
+def add_user():
     global currentID
-    global quizData
+    global userData
+
+    currentID += 1
 
     json_data = request.get_json()
     newName = json_data["name"].strip()
 
-    newQuizTaker = {
-                    "id": currentID,
-                    "name": newName,
+    newUser = {
+                "id": currentID,
+                "name": newName,
+                "quizAttempt": 1,
+                "bestScore": -1
+              }
+
+    userData[str(currentID)] = newUser
+
+    return jsonify(userID = currentID)
+
+@app.route('/add_quiz', methods=['PUT'])
+def add_quiz():
+    global currentID
+    global userData
+
+    print("User Data")
+    print(userData)
+
+    curUser = userData[str(currentID)]
+    curQuizAttempt = curUser["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    newQuizAttempt = {
                     "score": 0,
                     "areasImprove": []
                     }
 
-    quizData[str(currentID)] = newQuizTaker
+    userData[str(currentID)][quizName] = newQuizAttempt
 
-    return jsonify(userID = currentID)
+    print("Added quiz")
+    print(userData)
+
+    return jsonify(quizID = curQuizAttempt)
 
 #------------------------------------------------
 
 @app.route('/add_mc', methods=['PUT'])
 def add_mc():
     global currentID
-    global quizData
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
 
     json_data = request.get_json()
     questionID = json_data["questionID"]
@@ -227,19 +256,19 @@ def add_mc():
     answerID = json_data["answerID"]
     topic = json_data["topic"]
 
-    quizData[str(currentID)]["q" + questionID] = answer
+    userData[str(currentID)][quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
     if correctAnswer == answer:
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
-        quizData[str(currentID)]["score"] += 2
+        userData[str(currentID)][quizName]["score"] += 2
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
-        quizData[str(currentID)]["areasImprove"].append(topic)
-        quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
+        userData[str(currentID)][quizName]["areasImprove"].append(topic)
+        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID)
 
@@ -248,26 +277,29 @@ def add_mc():
 @app.route('/add_text', methods=['PUT'])
 def add_text():
     global currentID
-    global quizData
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
 
     json_data = request.get_json()
     questionID = json_data["questionID"]
     answer = json_data["answer"]
     topic = json_data["topic"]
 
-    quizData[str(currentID)]["q" + questionID] = answer
+    userData[str(currentID)][quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
     if correctAnswer == answer:
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
-        quizData[str(currentID)]["score"] += 2
+        userData[str(currentID)][quizName]["score"] += 2
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
-        quizData[str(currentID)]["areasImprove"].append(topic)
-        quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
+        userData[str(currentID)][quizName]["areasImprove"].append(topic)
+        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
 
@@ -276,26 +308,29 @@ def add_text():
 @app.route('/add_img', methods=['PUT'])
 def add_img():
     global currentID
-    global quizData
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
 
     json_data = request.get_json()
     questionID = json_data["questionID"]
     answer = json_data["answer"]
     topic = json_data["topic"]
 
-    quizData[str(currentID)]["q" + questionID] = answer
+    userData[str(currentID)][quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
     if correctAnswer == answer:
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
-        quizData[str(currentID)]["score"] += 2
+        userData[str(currentID)][quizName]["score"] += 2
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
-        quizData[str(currentID)]["areasImprove"].append(topic)
-        quizData[str(currentID)]["areasImprove"] = list(set(quizData[str(currentID)]["areasImprove"]))
+        userData[str(currentID)][quizName]["areasImprove"].append(topic)
+        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
 
@@ -304,9 +339,12 @@ def add_img():
 @app.route('/get_results', methods=['GET'])
 def get_results():
     global currentID
-    global quizData
+    global userData
 
-    currentUser = quizData[str(currentID)]
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    currentUser = userData[str(currentID)][quizName]
 
     userScore = currentUser["score"]
     userAreasToImprove = currentUser["areasImprove"]
@@ -316,8 +354,12 @@ def get_results():
     for area in userAreasToImprove:
         areasFull.append(topicConversionDic[area])
 
+    userData[str(currentID)]["quizAttempt"] += 1
 
-    currentID += 1
+    curBestScore = userData[str(currentID)]["bestScore"]
+
+    if userScore > curBestScore:
+        userData[str(currentID)]["bestScore"] = userScore
 
     return jsonify(quizScore = userScore, areas = userAreasToImprove, areaNames = areasFull)
 
@@ -325,13 +367,13 @@ def get_results():
 
 @app.route('/top_scorers', methods=['GET'])
 def top_scorers():
-    global quizData
+    global userData
 
     scores = []
 
-    for elem in quizData:
-        curUser = quizData[elem]
-        scores.append((curUser["name"], curUser["score"]))
+    for elem in userData:
+        curUser = userData[elem]
+        scores.append((curUser["name"], curUser["bestScore"]))
 
     withNames = list(filter(lambda x: len(x[0]) > 0, scores))
     withNames.sort(key = lambda x: x[1], reverse = True)
@@ -343,6 +385,8 @@ def top_scorers():
 
     names = [user[0] for user in result]
     scores = [user[1] for user in result]
+
+    print(userData)
 
     return jsonify(names = names, scores = scores)
 

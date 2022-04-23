@@ -1,18 +1,11 @@
-$(document).ready(function(){
-
-    $("#quiznav").addClass("active");
-
-});
-
-function add_quiz(new_user){
+function add_quiz(){
     $.ajax({
-        type: "POST",
+        type: "PUT",
         url: "add_quiz",                
         dataType : "json",
         contentType: "application/json; charset=utf-8",
-        data : JSON.stringify(new_user),
         success: function(result){
-            console.log(result["userID"])
+            console.log(result["quizID"])
         },
         error: function(request, status, error){
             console.log("Error");
@@ -24,28 +17,9 @@ function add_quiz(new_user){
 }
 
 $(document).ready(function(){
-    $("#userName").focus()
+    $("#quiznav").addClass("active");
 
     $("#startQuizBtn").click(function() {
-        let quiztaker = {
-            "name": userName.value
-        }
-
-        add_quiz(quiztaker)
-    });
-
-    $("#userName").keyup(function(event){
-        let keycode = (event.keyCode ? event.keyCode : event.which);
-
-        if(keycode == '13'){
-            let quiztaker = {
-                "name": userName.value
-            }
-
-            add_quiz(quiztaker)
-            window.location.href = "/quiz/1"
-        };
-
-        event.stopPropagation();
+        add_quiz()
     });
 });
