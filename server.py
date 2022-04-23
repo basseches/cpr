@@ -230,7 +230,8 @@ def add_quiz():
 
     newQuizAttempt = {
                     "score": 0,
-                    "areasImprove": []
+                    "areasImprove": [],
+                    "history": []
                     }
 
     userData[str(currentID)][quizName] = newQuizAttempt
@@ -264,11 +265,13 @@ def add_mc():
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
         userData[str(currentID)][quizName]["score"] += 2
+        userData[str(currentID)][quizName]["history"].append("greenBackground")
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
         userData[str(currentID)][quizName]["areasImprove"].append(topic)
         userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+        userData[str(currentID)][quizName]["history"].append("redBackground")
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID)
 
@@ -295,11 +298,13 @@ def add_text():
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
         userData[str(currentID)][quizName]["score"] += 2
+        userData[str(currentID)][quizName]["history"].append("greenBackground")
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
         userData[str(currentID)][quizName]["areasImprove"].append(topic)
         userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+        userData[str(currentID)][quizName]["history"].append("redBackground")
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
 
@@ -326,11 +331,13 @@ def add_img():
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
         userData[str(currentID)][quizName]["score"] += 2
+        userData[str(currentID)][quizName]["history"].append("greenBackground")
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
         userData[str(currentID)][quizName]["areasImprove"].append(topic)
         userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+        userData[str(currentID)][quizName]["history"].append("redBackground")
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
 
@@ -389,6 +396,18 @@ def top_scorers():
     print(userData)
 
     return jsonify(names = names, scores = scores)
+
+#-----------------------------------------------------------------------------
+
+@app.route('/get_circles', methods=['GET'])
+def get_circles():
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+    circleHistory = userData[str(currentID)][quizName]["history"]
+
+    return jsonify(history = circleHistory)
 
 #----------------------------------------------------------------------------
 #SEARCH FUNCTIONALITY

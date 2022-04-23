@@ -1,9 +1,3 @@
-$(document).ready(function(){
-
-    $("#quiznav").addClass("active");
-
-});
-
 function add_text(answer){
 	$.ajax({
         type: "PUT",
@@ -19,13 +13,40 @@ function add_text(answer){
             	$("#textResult").text(answerText)
             	$("#textResult").removeClass("redText")
             	$("#textResult").addClass("greenText")
+
+            	$("#dot"+curQuestion["id"]).addClass("greenBackground")
             }else{
             	$("#textResult").text(answerText)
             	$("#textResult").addClass("redText")
+            	$("#dot"+curQuestion["id"]).addClass("redBackground")
             }
 
             $("#nextQuestion").removeClass("isDisabled")
             $("#userText").attr("disabled", true)
+        },
+        error: function(request, status, error){
+            console.log("Error");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    });
+};
+
+function get_circles(){
+	$.ajax({
+        type: "GET",
+        url: "/get_circles",                
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(result){
+            let circleColors = result["history"]
+
+            circleColors.forEach(function (item, index) {
+				let circleNum = index + 1
+				$("#dot"+circleNum).addClass(item)
+			});
+            
         },
         error: function(request, status, error){
             console.log("Error");
@@ -71,6 +92,8 @@ function getAnswer(){
 };
 
 $(document).ready(function(){
+	$("#quiznav").addClass("active");
+
 	$("#dot" + curQuestion["id"]).addClass("currentQuestion")
 	$("#textResult").text("")
 
@@ -81,7 +104,7 @@ $(document).ready(function(){
 
 			$("#nextText").text("Next question")
 		} else{
-			$("#nextQuestion").attr("href", "/")
+			$("#nextQuestion").attr("href", "/quizend")
 
 			$("#nextText").text("Finish quiz")
 	}
@@ -95,5 +118,6 @@ $(document).ready(function(){
 	$("#nextQuestion").addClass("isDisabled")
 	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 	$("#userText").focus()
+	get_circles()
 	getAnswer()
 });

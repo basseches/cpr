@@ -1,9 +1,3 @@
-$(document).ready(function(){
-
-    $("#quiznav").addClass("active");
-
-});
-
 function add_img(answer){
 	$.ajax({
         type: "PUT",
@@ -19,12 +13,42 @@ function add_img(answer){
             	$("#imgResult").text(answerText)
             	$("#imgResult").removeClass("redText")
             	$("#imgResult").addClass("greenText")
+
+                $("#dot"+curQuestion["id"]).addClass("greenBackground")
             }else{
             	$("#imgResult").text(answerText)
             	$("#imgResult").addClass("redText")
+
+                $("#dot"+curQuestion["id"]).addClass("redBackground")
             }
 
             $("#nextQuestion").removeClass("isDisabled")
+        },
+        error: function(request, status, error){
+            console.log("Error");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    });
+};
+
+function get_circles(){
+	$.ajax({
+        type: "GET",
+        url: "/get_circles",                
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(result){
+            let circleColors = result["history"]
+
+            console.log(circleColors)
+
+            circleColors.forEach(function (item, index) {
+				let circleNum = index + 1
+				$("#dot"+circleNum).addClass(item)
+			});
+            
         },
         error: function(request, status, error){
             console.log("Error");
@@ -48,6 +72,8 @@ function getAnswer(){
 };
 
 $(document).ready(function(){
+	$("#quiznav").addClass("active");
+	
 	$("#dot" + curQuestion["id"]).addClass("currentQuestion")
 
 	if (curQuestion["id"] != 4) {
@@ -57,7 +83,7 @@ $(document).ready(function(){
 
 			$("#nextText").text("Next question")
 		} else{
-			$("#nextQuestion").attr("href", "/")
+			$("#nextQuestion").attr("href", "/quizend")
 
 			$("#nextText").text("Finish quiz")
 	}
@@ -71,5 +97,7 @@ $(document).ready(function(){
 	$("#nextQuestion").addClass("isDisabled")
 	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 
+
+	get_circles()
 	getAnswer()
 })
