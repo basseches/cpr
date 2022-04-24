@@ -227,6 +227,10 @@ th, td {
   pointer-events: none;
 }
 
+.cantClick{
+    pointer-events: none;
+}
+
 .imageResize{
     height: 250px;
 }
@@ -296,6 +300,10 @@ th, td {
 }
 
 #chestimg:hover {
+    cursor:pointer;
+}
+
+#chestImg:hover {
     cursor:pointer;
 }
 
