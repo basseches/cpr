@@ -1,0 +1,22 @@
+<div class = "row">
+    <div class = "col-md">
+        {% for text in content.explanatoryText %}
+        <div class="alata mediumText row">{{text}}</div>
+        {% endfor %}
+    </div>
+    <div class = "col-md-2">
+        {% for img in content.images %}
+        {% if img == content.images[1] %}
+        <img src ="{{img}}" width="200" height="auto">
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row">
+    {% for img in content.images %}
+    {% if img == content.images[0] %}
+        <img src="{{img}}" height="{{content.imageSizes[loop.index0]}}" class="autowid">
+    {% endif %}
+    {% endfor %}
+</div>
