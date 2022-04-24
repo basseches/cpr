@@ -34,8 +34,6 @@ function start_chest(startTime){
         success: function(result){
             let repNum = result["repNum"]
 
-            $("#chestImg").removeClass("cantClick")
-
             $("#chestText").empty()
 
             let compressionDiv = $("<div>")
@@ -57,7 +55,12 @@ function start_chest(startTime){
             $("#chestText").append("<br>")
             $("#chestText").append(compressionFeedback)
 
-            // Add red circle on the chest maybe to try and indicate where the user should click?         
+            // Add red circle on the chest maybe to indicate where the user should click
+            let redCircle = $("<span>")
+            $(redCircle).addClass("dot")
+            $(redCircle).addClass("redCircle")
+            $("#redChestCircle").append(redCircle)
+
         },
         error: function(request, status, error){
             console.log("Error");
@@ -95,7 +98,7 @@ function click_chest(clickTime){
 
             } else{
                 $("#quizCompFeedback").empty()
-                $("#chestImg").addClass("cantClick")
+                $("#redChestCircle").addClass("cantClick")
                 verifyChest()
             }
          
@@ -161,7 +164,8 @@ function startChest(){
 };
 
 function clickChest(){
-    $("#chestImg").click(function () {
+    $("#redChestCircle").click(function () {
+        console.log("hi")
         clickTime = {
                         "questionID": curQuestion["id"],
                         "clickTime": Date.now()
@@ -213,9 +217,6 @@ $(document).ready(function(){
     $("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 
     // Chest logic
-
-    $("#chestImg").addClass("cantClick")
-
     startChest()
     clickChest()
 })

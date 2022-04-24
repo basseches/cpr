@@ -303,7 +303,7 @@ th, td {
     cursor:pointer;
 }
 
-#chestImg:hover {
+#redChestCircle:hover {
     cursor:pointer;
 }
 
@@ -388,5 +388,18 @@ th, td {
 
 .active {
     color: black;
+    font-weight: bold;
+}
+
+.redCircle{
+    height: 125px;
+    width: 125px;
+    border: 10px;
+    border-color: red;
+    border-style: solid;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 75px;
+    left: 72px;
 }
 /**/
