@@ -11,6 +11,7 @@ learnMaterial = {
         "checkpoint": 0,
         "title" : "What is CPR?",
         "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
+        "template": "step1.html", 
         "images": ["/static/cpr-header.png"],
         "imageSizes": ["300px"],
         "nextid" : "/learn/2"
@@ -20,6 +21,7 @@ learnMaterial = {
         "checkpoint": 0,
         "title" : "Should you perform CPR?",
         "explanatoryText":[""],
+        "template": "step2.html",
         "images": ["/static/setting1.png", "/static/setting2.png"],
         "imageSizes": ["500px", "300px"],
         "nextid" : "/learn/3"
@@ -29,6 +31,7 @@ learnMaterial = {
         "checkpoint": 1,
         "title" : "Preparatory steps",
         "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
+        "template":"step3.html",
         "images": ["/static/prep1.png", "/static/perp2.png"],
         "imageSizes": ["300px", "200px"],
         "nextid" : "/learn/4",
@@ -40,6 +43,7 @@ learnMaterial = {
         "checkpoint": 1,
         "title": "Chest compressions",
         "explanatoryText" : ["Center your hands on the chest.", "Allow the chest to return to a normal position after each compression.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees."],
+        "template":"step4.html",
         "images" : ["/static/compressionguide.png", "/static/compressions.gif"],
         "imageSizes": ["150px", "150px"],
         "nextid" : "/learn/5",
@@ -50,6 +54,7 @@ learnMaterial = {
         "checkpoint": 1,
         "title": "Breaths",
         "explanatoryText": ["Step 1: Open the airways.", "Step 2: Tilt their head back.", "Step 3: Lift their chin.", "Step 4: Administer 2 rescue breaths.", "The breaths should be approx 1 second in length.", "The chest should rise."],
+        "template" : "step5.html",
         "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
         "imageSizes": ["200px", "200px", "200px"],
         "nextid" : "/quiz",
@@ -159,7 +164,7 @@ def learn(id = None, u_id = currentID + 1):
     content = learnMaterial[id]
     print(userData)
     print(u_id)
-    user = userData[u_id]
+    user = userData[str(u_id)]
     
     if content == None:
         return render_template('notfound.html')
@@ -217,7 +222,7 @@ def add_user():
                 "checkpoint": [0, 0, 0]
               }
 
-    userData[int(currentID)] = newUser
+    userData[str(currentID)] = newUser
     return jsonify(userID = currentID)
 
 @app.route('/add_quiz', methods=['PUT'])
