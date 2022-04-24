@@ -1,0 +1,12 @@
+{% for text in content.explanatoryText %}
+    <div class="alata mediumText row">{{text}}</div>
+{% endfor %}
+
+<div class="smallPadding"></div>
+
+<div class="row">
+    {% for img in content.images %}
+        <img src="{{img}}" height="{{content.imageSizes[loop.index0]}}" class="autowid">
+    {% endfor %}
+</div>
+
