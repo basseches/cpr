@@ -173,7 +173,7 @@ def learn(id = None, u_id = currentID + 1):
 
 @app.route('/checkpoint/<topic>')
 def checkpt(topic = None, u_id = currentID + 1):
-    user = userData[u_id]
+    user = userData[str(u_id)]
     user['checkpoint'][checkpoints[topic]['id']] = 1
     content = checkpoints[topic]
     if content == None:
@@ -317,39 +317,6 @@ def add_text():
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
 
-#-----------------------------------------------------------------
-
-@app.route('/add_img', methods=['PUT'])
-def add_img():
-    global currentID
-    global userData
-
-    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
-    quizName = "quiz" + str(curQuizAttempt)
-
-    json_data = request.get_json()
-    questionID = json_data["questionID"]
-    answer = json_data["answer"]
-    topic = json_data["topic"]
-
-    userData[str(currentID)][quizName]["q" + questionID] = answer
-
-    correctAnswer = quizQuestions[questionID]["correctAnswer"]
-
-    if correctAnswer == answer:
-        userAnswerCorrect = "Yes"
-        answerText = quizQuestions[questionID]["correctText"]
-        userData[str(currentID)][quizName]["score"] += 2
-        userData[str(currentID)][quizName]["history"].append("greenBackground")
-    else:
-        userAnswerCorrect = "No"
-        answerText = quizQuestions[questionID]["incorrectText"]
-        userData[str(currentID)][quizName]["areasImprove"].append(topic)
-        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
-        userData[str(currentID)][quizName]["history"].append("redBackground")
-
-    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
-
 #--------------------------------------------------------------------
 
 @app.route('/get_results', methods=['GET'])
@@ -417,6 +384,98 @@ def get_circles():
     circleHistory = userData[str(currentID)][quizName]["history"]
 
     return jsonify(history = circleHistory)
+
+#----------------------------------------------------------------------------
+
+@app.route('/start_chest', methods=['PUT'])
+def start_chest():
+    global currentID
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+    startTime = json_data["startTime"]
+
+    userData[str(currentID)][quizName]["q" + questionID] = {
+                                                                "times": [startTime],
+                                                                "curReps": 0,
+                                                                "numGood": 0
+                                                            }
+
+    return jsonify(repNum = userData[str(currentID)][quizName]["q" + questionID]["curReps"])
+
+#-------------------------------------------------------------------------------
+
+@app.route('/click_chest', methods=['PUT'])
+def click_chest():
+    global currentID
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+    clickTime = json_data["clickTime"]
+
+    lastClick = userData[str(currentID)][quizName]["q" + questionID]["times"][-1]
+    userData[str(currentID)][quizName]["q" + questionID]["times"].append(clickTime)
+
+    diffClickTime = clickTime - lastClick
+
+    result = ""
+
+    # Ideal rate is 600ms between compressions
+    if diffClickTime >= 500 and diffClickTime <= 700:
+        result = "Good"
+        userData[str(currentID)][quizName]["q" + questionID]["numGood"] += 1
+    elif diffClickTime < 500:
+        result = "Slower"
+    else:
+        result = "Faster"
+
+    userData[str(currentID)][quizName]["q" + questionID]["curReps"] += 1
+
+    repNum = userData[str(currentID)][quizName]["q" + questionID]["curReps"]
+
+    if repNum == 30:
+        done = "Yes"
+    else:
+        done = "No"
+
+    return jsonify(repNum = repNum, clickResult = result, finished = done)
+
+#---------------------------------------------------------------------------
+
+@app.route('/verify_chest', methods=['PUT'])
+def verify_chest():
+    global currentID
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+    topic = json_data["topic"]
+    
+    numGood = userData[str(currentID)][quizName]["q" + questionID]["numGood"]
+    if numGood >= 25:
+        userAnswerCorrect = "Yes"
+        answerText = quizQuestions[questionID]["correctText"]
+        userData[str(currentID)][quizName]["score"] += 2
+        userData[str(currentID)][quizName]["history"].append("greenBackground")
+    else:
+        userAnswerCorrect = "No"
+        answerText = quizQuestions[questionID]["incorrectText"]
+        userData[str(currentID)][quizName]["areasImprove"].append(topic)
+        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+        userData[str(currentID)][quizName]["history"].append("redBackground")
+
+    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, numCorrect = numGood)
 
 #----------------------------------------------------------------------------
 #SEARCH FUNCTIONALITY
