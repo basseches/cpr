@@ -8,7 +8,7 @@ app = Flask(__name__)
 learnMaterial = {
     "1": {
         "id" : "1",
-        "checkpoint": False,
+        "checkpoint": 0,
         "title" : "What is CPR?",
         "explanatoryText" : ["Cardiopulmonary resuscitation (CPR) is a multi-step procedure performed on a patient whose heart stops beating.", "According to the American Heart Association, immediate CPR can triple chances of survival after cardiac arrest."],
         "images": ["/static/cpr-header.png"],
@@ -17,7 +17,7 @@ learnMaterial = {
     },
     "2": {
         "id": "2",
-        "checkpoint": False,
+        "checkpoint": 0,
         "title" : "Should you perform CPR?",
         "explanatoryText":[""],
         "images": ["/static/setting1.png", "/static/setting2.png"],
@@ -26,7 +26,7 @@ learnMaterial = {
     },
     "3": {
         "id" : "3",
-        "checkpoint": True,
+        "checkpoint": 1,
         "title" : "Preparatory steps",
         "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
         "images": ["/static/prep1.png", "/static/perp2.png"],
@@ -37,7 +37,7 @@ learnMaterial = {
     },
     "4": {
         "id": "4",
-        "checkpoint": True,
+        "checkpoint": 1,
         "title": "Chest compressions",
         "explanatoryText" : ["Center your hands on the chest.", "Allow the chest to return to a normal position after each compression.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees."],
         "images" : ["/static/compressionguide.png", "/static/compressions.gif"],
@@ -47,7 +47,7 @@ learnMaterial = {
     },
     "5": {
         "id": "5",
-        "checkpoint": True,
+        "checkpoint": 1,
         "title": "Breaths",
         "explanatoryText": ["Step 1: Open the airways.", "Step 2: Tilt their head back.", "Step 3: Lift their chin.", "Step 4: Administer 2 rescue breaths.", "The breaths should be approx 1 second in length.", "The chest should rise."],
         "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
@@ -141,7 +141,6 @@ quizQuestions = {
 
 currentID = 0
 userData = {}
-
 topicConversionDic = {"5": "Breaths", "4": "Chest compressions", "3": "Preparatory steps"}
 
 # ROUTES
@@ -155,22 +154,27 @@ def tutorial():
     return render_template('tutorial.html')
 
 @app.route('/learn/<id>')
-def learn(id = None):
-    
+def learn(id = None, u_id = currentID + 1):
+    print(u_id)
     content = learnMaterial[id]
+    print(userData)
+    print(u_id)
+    user = userData[u_id]
+    
     if content == None:
         return render_template('notfound.html')
 
-    return render_template('learn.html', content=content)
+    return render_template('learn.html', content=content, user=user)
 
 @app.route('/checkpoint/<topic>')
-def checkpt(topic = None):
-
+def checkpt(topic = None, u_id = currentID + 1):
+    user = userData[u_id]
+    user['checkpoint'][checkpoints[topic]['id']] = 1
     content = checkpoints[topic]
     if content == None:
         return render_template('notfound.html')
 
-    return render_template('checkpoint.html', content=content)
+    return render_template('checkpoint.html', content=content, user=user)
 
 @app.route('/quiz')
 def quizHome():
@@ -209,11 +213,11 @@ def add_user():
                 "id": currentID,
                 "name": newName,
                 "quizAttempt": 1,
-                "bestScore": -1
+                "bestScore": -1, 
+                "checkpoint": [0, 0, 0]
               }
 
-    userData[str(currentID)] = newUser
-
+    userData[int(currentID)] = newUser
     return jsonify(userID = currentID)
 
 @app.route('/add_quiz', methods=['PUT'])
