@@ -8,21 +8,10 @@
     let content = {{content|tojson}}
     let user = {{user|tojson}}
 </script>
-
 <div class="row">
     <div class="alata headerFont bold quizHeader">{{content.title}}</div>
 </div>
-{% for text in content.explanatoryText %}
-    <div class="alata mediumText row">{{text}}</div>
-{% endfor %}
-
-<div class="smallPadding"></div>
-
-<div class="row">
-    {% for img in content.images %}
-        <img src="{{img}}" height="{{content.imageSizes[loop.index0]}}" class="autowid">
-    {% endfor %}
-</div>
+{% include content.template %}
 
 <div class="smallPadding"></div>
 
@@ -41,5 +30,4 @@
 <div class="padding"></div>
 
 <div id="confirm"></div>
-
 {% endblock %}
