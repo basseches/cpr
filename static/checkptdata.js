@@ -38,7 +38,7 @@ let typeInit = [generatePrep, generateChest, generateBreaths];
 let refreshPage = [refreshPrep, refreshChest, refreshBreaths];
 
 $(document).ready(function() {
-
+    markCheckpoint();
     generateLayout();
 
     // initialize the page
@@ -58,6 +58,11 @@ $(document).ready(function() {
     $(navid).addClass("active");
 
 });
+
+function markCheckpoint(){
+    console.log(user)
+    user.checkpoint[content.id] = 1
+} 
 
 function generateLayout() {
 
@@ -288,6 +293,9 @@ function refreshChest() {
 // BREATHS CHECKPOINT FUNCTIONS
 
 function generateBreaths() {
+
+    console.log(user)
+    user['checkpoint'][content.id] = 1
 
     let curr = '<div class="absolute" id="head"><img src="/static/head.png" class="imageResize"></div>';
     $("#images").append(curr);
