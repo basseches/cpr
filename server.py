@@ -344,7 +344,12 @@ def get_results():
     if userScore > curBestScore:
         userData[str(currentID)]["bestScore"] = userScore
 
-    return jsonify(quizScore = userScore, areas = userAreasToImprove, areaNames = areasFull)
+    if userScore == 8:
+        perfectScore = "Yes"
+    else:
+        perfectScore = "No"
+
+    return jsonify(quizScore = userScore, areas = userAreasToImprove, areaNames = areasFull, perfect = perfectScore)
 
 #----------------------------------------------------------------------------
 

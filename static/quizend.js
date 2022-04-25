@@ -8,6 +8,7 @@ function get_results(){
             let quizScore = result["quizScore"]
             let areaIDs = result["areas"]
             let areaNames = result["areaNames"]
+            let perfectScore = result["perfect"]
 
             $("#userScore").text(quizScore + "/8")
 
@@ -19,6 +20,12 @@ function get_results(){
             	} else {
             		$("#resultsIntro").text("Yikes.")
             	}
+            }
+
+            if (perfectScore === "Yes"){
+                $("#topicsText").text("")
+            } else{
+                $("#topicsText").text("These topics tripped you up: ")
             }
 
 
