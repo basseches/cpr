@@ -18,6 +18,7 @@ function add_user(new_user){
 }
 
 $(document).ready(function(){
+    
     $("#homenav").addClass("active");
     $("#userName").focus()
 
@@ -43,4 +44,5 @@ $(document).ready(function(){
 
         event.stopPropagation();
     });
+
 })

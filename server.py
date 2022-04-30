@@ -2,7 +2,7 @@ import numpy as np
 import random
 from flask import Flask
 from flask import render_template
-from flask import Response, request, jsonify
+from flask import Response, request, jsonify, redirect, url_for
 app = Flask(__name__)
 
 learnMaterial = {
@@ -167,21 +167,19 @@ def tutorial():
     return render_template('tutorial.html')
 
 @app.route('/learn/<id>')
-def learn(id = None, u_id = currentID + 1):
-    print(u_id)
+def learn(id = None):
+
     content = learnMaterial[id]
-    print(userData)
-    print(u_id)
-    user = userData[str(u_id)]
-    
     if content == None:
         return render_template('notfound.html')
+    user = userData[str(currentID)]
 
     return render_template('learn.html', content=content, user=user)
 
 @app.route('/checkpoint/<topic>')
-def checkpt(topic = None, u_id = currentID + 1):
-    user = userData[str(u_id)]
+def checkpt(topic = None):
+
+    user = userData[str(currentID)]
     user['checkpoint'][checkpoints[topic]['id']] = 1
     content = checkpoints[topic]
     if content == None:
@@ -197,7 +195,21 @@ def quizHome():
 def quizQuestion(questionID = None):
     global quizQuestions
 
+    curUser = userData[str(currentID)]
+    curQuizAttempt = curUser["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+    
+    curUser["takingQuiz"] = questionID
     question = quizQuestions[questionID]
+
+    key = "q" + questionID
+    if key in curUser[quizName]:
+        redir = ""
+        if int(questionID) != 4:
+            nextID = int(questionID) + 1
+            return redirect(url_for("quizQuestion",questionID=nextID))
+        else:
+            return redirect(url_for("quizEnd"))
 
     if question["mc"]:
         return render_template('mcQuestion.html', question = question)
@@ -208,6 +220,7 @@ def quizQuestion(questionID = None):
 
 @app.route('/quizend')
 def quizEnd():
+    userData[str(currentID)]["takingQuiz"] = -1
     return render_template('quizend.html')
 
 # AJAX FUNCTIONS
@@ -225,9 +238,10 @@ def add_user():
     newUser = {
                 "id": currentID,
                 "name": newName,
+                "takingQuiz": -1,
                 "quizAttempt": 1,
                 "bestScore": -1, 
-                "checkpoint": [0, 0, 0]
+                "checkpoint": [0, 0, 0],
               }
 
     userData[str(currentID)] = newUser
@@ -235,13 +249,9 @@ def add_user():
 
 @app.route('/add_quiz', methods=['PUT'])
 def add_quiz():
-    global currentID
-    global userData
-
-    print("User Data")
-    print(userData)
 
     curUser = userData[str(currentID)]
+    curUser["takingQuiz"] = 0
     curQuizAttempt = curUser["quizAttempt"]
     quizName = "quiz" + str(curQuizAttempt)
 
@@ -251,10 +261,7 @@ def add_quiz():
                     "history": []
                     }
 
-    userData[str(currentID)][quizName] = newQuizAttempt
-
-    print("Added quiz")
-    print(userData)
+    curUser[quizName] = newQuizAttempt
 
     return jsonify(quizID = curQuizAttempt)
 
@@ -262,10 +269,11 @@ def add_quiz():
 
 @app.route('/add_mc', methods=['PUT'])
 def add_mc():
-    global currentID
+
     global userData
 
-    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    curUser = userData[str(currentID)]
+    curQuizAttempt = curUser["quizAttempt"]
     quizName = "quiz" + str(curQuizAttempt)
 
     json_data = request.get_json()
@@ -274,21 +282,21 @@ def add_mc():
     answerID = json_data["answerID"]
     topic = json_data["topic"]
 
-    userData[str(currentID)][quizName]["q" + questionID] = answer
+    curUser[quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
     if correctAnswer == answer:
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
-        userData[str(currentID)][quizName]["score"] += 2
-        userData[str(currentID)][quizName]["history"].append("greenBackground")
+        curUser[quizName]["score"] += 2
+        curUser[quizName]["history"].append("greenBackground")
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
-        userData[str(currentID)][quizName]["areasImprove"].append(topic)
-        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
-        userData[str(currentID)][quizName]["history"].append("redBackground")
+        curUser[quizName]["areasImprove"].append(topic)
+        curUser[quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+        curUser[quizName]["history"].append("redBackground")
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID)
 
@@ -296,10 +304,11 @@ def add_mc():
 
 @app.route('/add_text', methods=['PUT'])
 def add_text():
-    global currentID
+
     global userData
 
-    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    curUser = userData[str(currentID)]
+    curQuizAttempt = curUser["quizAttempt"]
     quizName = "quiz" + str(curQuizAttempt)
 
     json_data = request.get_json()
@@ -307,21 +316,21 @@ def add_text():
     answer = json_data["answer"]
     topic = json_data["topic"]
 
-    userData[str(currentID)][quizName]["q" + questionID] = answer
+    curUser[quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
     if correctAnswer == answer:
         userAnswerCorrect = "Yes"
         answerText = quizQuestions[questionID]["correctText"]
-        userData[str(currentID)][quizName]["score"] += 2
-        userData[str(currentID)][quizName]["history"].append("greenBackground")
+        curUser[quizName]["score"] += 2
+        curUser[quizName]["history"].append("greenBackground")
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]
-        userData[str(currentID)][quizName]["areasImprove"].append(topic)
-        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
-        userData[str(currentID)][quizName]["history"].append("redBackground")
+        curUser[quizName]["areasImprove"].append(topic)
+        curUser[quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+        curUser[quizName]["history"].append("redBackground")
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
 

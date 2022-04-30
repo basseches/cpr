@@ -4,7 +4,9 @@ $(document).ready(function () {
 
     $(navid).addClass("active");
 
+    backtoQuiz();
     makeCheckpoint();
+
     $("#nextbutton").click(function () {
         next()
     });
@@ -58,6 +60,30 @@ function next() {
 
 function back() {
     location.href = content.backid;
+}
+
+function backtoQuiz() {
+
+    if (user.takingQuiz > 0) {
+
+        let backcol = $('<div class="col-md-2"></div>');
+        let backbtndiv = $('<button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="backtoquiz">Back to quiz</button>');
+        $(backcol).append(backbtndiv);
+        $("#btnrow").append(backcol);
+        let coldiv = $('<div class="col-md-4"></div>');
+        $("#btnrow").append(coldiv);
+
+        $("#backtoquiz").click(function () {
+            location.href = "/quiz/" + user.takingQuiz;
+        });
+
+    } else {
+
+        let coldiv = $('<div class="col-md-6"></div>');
+        $("#btnrow").append(coldiv);
+
+    }
+
 }
 
 function makeCheckpoint() {
