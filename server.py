@@ -198,6 +198,22 @@ def quizQuestion(questionID = None):
     curUser = userData[str(currentID)]
     curQuizAttempt = curUser["quizAttempt"]
     quizName = "quiz" + str(curQuizAttempt)
+
+    if (int(questionID) == 4) and (len(curUser[quizName]["history"]) == 2):
+        print("inside if")
+        numGood = curUser[quizName]["q3"]["numGood"]
+        if numGood >= 25:
+            userAnswerCorrect = "Yes"
+            answerText = quizQuestions[questionID]["correctText"]
+            userData[str(currentID)][quizName]["score"] += 2
+            userData[str(currentID)][quizName]["history"].append("greenBackground")
+        else:
+            userAnswerCorrect = "No"
+            answerText = quizQuestions[questionID]["incorrectText"]
+            userData[str(currentID)][quizName]["areasImprove"].append("4")
+            userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+            userData[str(currentID)][quizName]["history"].append("redBackground")
+        
     
     curUser["takingQuiz"] = questionID
     question = quizQuestions[questionID]
@@ -378,7 +394,9 @@ def top_scorers():
 
     for elem in userData:
         curUser = userData[elem]
-        scores.append((curUser["name"], curUser["bestScore"]))
+        # This happens when a user is added but never starts a quiz, then uses another name
+        if curUser["bestScore"] != -1:
+            scores.append((curUser["name"], curUser["bestScore"]))
 
     withNames = list(filter(lambda x: len(x[0]) > 0, scores))
     withNames.sort(key = lambda x: x[1], reverse = True)
