@@ -20,6 +20,15 @@ function add_user(new_user){
 $(document).ready(function(){
     
     $("#homenav").addClass("active");
+    for (i = 1; i < 7; i++) {
+        let linkname = "#nav-link" + i;
+        console.log(linkname)
+        $(linkname).addClass("disabled");
+    }
+
+    document.getElementById("search").disabled = true;
+    document.getElementById("submit").disabled = true;
+    
     $("#userName").focus()
 
     $("#startCPRBtn").click(function() {

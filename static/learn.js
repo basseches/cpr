@@ -88,7 +88,13 @@ function backtoQuiz() {
 
 function makeCheckpoint() {
 
-    if (content.checkpoint) {
+    if (content.id == 1) {
+
+        // append back button
+        let backcol = $('<div class="col-md-4"></div>');
+        $("#btnrow").append(backcol);
+
+    } else if (content.checkpoint) {
 
         // append back button
         let backcol = $('<div class="col-md-2"></div>');
