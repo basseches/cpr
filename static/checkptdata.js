@@ -49,6 +49,10 @@ $(document).ready(function() {
         location.href = content.next;
     });
 
+    $("#backbutton").click(function(){
+        location.href = content.back;
+    });
+
     $("#refresh").click(function(){
         refreshPage[content.id]();
     });
@@ -66,11 +70,13 @@ function markCheckpoint(){
 
 function generateLayout() {
 
-    let cols = '<div class="col-md-6"></div><div class="col-md-3" id="refcol"></div><div class="col-md-3" id="nextcol"></div>';
+    let cols = '<div class="col-md-6"></div><div class="col-md-2" id="backcol"></div><div class="col-md-2" id="refcol"></div><div class="col-md-2" id="nextcol"></div>';
     $("#buttondiv").append(cols);
-    let refbutton = '<button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="refresh">Try again</button>';
+    let backbutton = '<button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="backbutton">Back</button>';
+    $("#backcol").append(backbutton);
+    let refbutton = '<button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="refresh">Try again</button>';
     $("#refcol").append(refbutton);
-    let nextbutton = '<button class="alata greyBackground whiteText startQuiz smallPadding mediumText" id="nextbutton">Next</button>';
+    let nextbutton = '<button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="nextbutton">Next</button>';
     $("#nextcol").append(nextbutton);
 
 }

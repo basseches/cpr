@@ -14,7 +14,8 @@ learnMaterial = {
         "template": "step1.html", 
         "images": ["/static/cpr-header.png"],
         "imageSizes": ["300px"],
-        "nextid" : "/learn/2"
+        "nextid" : "/learn/2",
+        "backid" : "/",
     },
     "2": {
         "id": "2",
@@ -24,7 +25,8 @@ learnMaterial = {
         "template": "step2.html",
         "images": ["/static/setting1.png", "/static/setting2.png"],
         "imageSizes": ["500px", "300px"],
-        "nextid" : "/learn/3"
+        "nextid" : "/learn/3",
+        "backid" : "/learn/1",
     },
     "3": {
         "id" : "3",
@@ -35,6 +37,7 @@ learnMaterial = {
         "images": ["/static/prep1.png", "/static/perp2.png"],
         "imageSizes": ["300px", "200px"],
         "nextid" : "/learn/4",
+        "backid" : "/learn/2",
         "checkpointlink" : "/prep"
 
     },
@@ -47,6 +50,7 @@ learnMaterial = {
         "images" : ["/static/compressionguide.png", "/static/compressions.gif"],
         "imageSizes": ["150px", "150px"],
         "nextid" : "/learn/5",
+        "backid" : "/learn/3",
         "checkpointlink" : "/chest"
     },
     "5": {
@@ -58,6 +62,7 @@ learnMaterial = {
         "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
         "imageSizes": ["200px", "200px", "200px"],
         "nextid" : "/quiz",
+        "backid" : "/learn/4",
         "checkpointlink" : "/breaths"
     }
 }
@@ -69,7 +74,8 @@ checkpoints = {
         "title": "Preparatory steps",
         "text": "Order the following items by precedence (drag and drop):",
         "learnid": 3,
-        "next": "/learn/4"
+        "next": "/learn/4",
+        "back": "/learn/3"
     },
 
     "chest": {
@@ -77,7 +83,8 @@ checkpoints = {
         "title": "Chest compressions",
         "text": "Click the audio button, then click the start button to practice chest compressions to the beat of \"Stayin' Alive.\"",
         "learnid": 4,
-        "next": "/learn/5"
+        "next": "/learn/5",
+        "back": "/learn/4"
     },
 
     "breaths": {
@@ -85,7 +92,8 @@ checkpoints = {
         "title": "Breaths",
         "text": "Click the dots in the right order to perform a rescue breath.",
         "learnid": 5,
-        "next": "/quiz"
+        "next": "/quiz",
+        "back": "/learn/5"
     }
 
 }

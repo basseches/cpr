@@ -1,18 +1,23 @@
 $(document).ready(function () {
-    $("#nextbutton").click(function () {
-        next()
-    });
-
 
     let navid = "#" + content.id;
 
     $(navid).addClass("active");
 
     makeCheckpoint();
-    console.log(user)
+    $("#nextbutton").click(function () {
+        next()
+    });
+
+    $("#backbutton").click(function () {
+        back()
+    });
+
 });
 
 function next() {
+
+    // Warn the user if there's a checkpoint they haven't completed.
     if (content.checkpoint) {
         if (user.checkpoint[content.id - 3] == 0) {
             let confirmdiv = $('<div id="dialog-confirm" title="">')
@@ -51,15 +56,46 @@ function next() {
     }
 }
 
+function back() {
+    location.href = content.backid;
+}
+
 function makeCheckpoint() {
 
     if (content.checkpoint) {
-        let buttondiv = $('<button class="alata greenBackground whiteText startQuiz smallPadding mediumText" id="checkpoint">Checkpoint</button>');
-        $("#checkpoint").append(buttondiv);
+
+        // append back button
+        let backcol = $('<div class="col-md-2"></div>');
+        let backbtndiv = $('<button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="backbutton">Back</button>');
+        $(backcol).append(backbtndiv);
+        $("#btnrow").append(backcol);
+
+        // append checkpoint button
+        let checkcol = $('<div class="col-md-2"></div>');
+        let checkbtndiv = $('<button class="alata greenBackground whiteText checkptbutton smallPadding mediumText" id="checkpoint">Checkpoint</button>');
+        $(checkcol).append(checkbtndiv);
+        $("#btnrow").append(checkcol);
+
         $("#checkpoint").click(function () {
             checkpoint();
         });
+
+    } else {
+
+        // append empty column if no checkpoint
+        let coldiv = $('<div class="col-md-2"></div>');
+        $("#btnrow").append(coldiv);
+
+        // append back button
+        let backcol = $('<div class="col-md-2"></div>');
+        let backbtndiv = $('<button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="backbutton">Back</button>');
+        $(backcol).append(backbtndiv);
+        $("#btnrow").append(backcol);
     }
+
+    // append next button
+    let nextbtn = $('<div class="col-md-2"><button class="alata greyBackground whiteText checkptbutton smallPadding mediumText" id="nextbutton">Next</button></div>');
+    $("#btnrow").append(nextbtn);
 
 }
 
