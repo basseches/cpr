@@ -21,6 +21,7 @@ let displayOrder = [3, 2, 0, 1];
 let started = false
 let compressionCt = 0
 let setCt = 0
+let pace = ""
 
 let timeoutIDs = [];
 
@@ -235,7 +236,8 @@ function generateChest() {
         countdown();
         // logTime();
     });
-
+    var prevTime;
+    var difference;
     $("#chestimg").click(function(){
         if (started) {
             compressionCt++;
@@ -244,6 +246,28 @@ function generateChest() {
                 setCt++;
                 $("#sets").html(setCt);
             }
+            $("#pace").html(pace);
+            var date = new Date();
+            if (compressionCt >= 2) {
+                currentTime = date.getTime()
+                difference = currentTime - prevTime;
+                console.log(difference);
+                prevTime = currentTime
+                if(difference >= 500 && difference <= 700) { 
+                    pace = "great pace!"
+                    $("#pace").html(pace)
+                }
+                else if (difference > 700){
+                    pace = "speed up!"
+                    $("#pace").html(pace)
+                }
+                else{
+                    pace = "slow down!"
+                    $("#pace").html(pace)
+                }
+            }
+            else
+                prevTime = date.getTime();
         }
     });
 
@@ -271,7 +295,12 @@ function countdown() {
     timeoutIDs.unshift(id);
 
     id = setTimeout(function(){
-        $("#buttonSpan").html("<div class='row margin subheaderFont'>Compressions:</div><div class='row margin chestNums' id='compressions'>" + compressionCt +"</div><div class='row margin subheaderFont'>Sets:</div><div class='row margin chestNums' id='sets'>" + setCt + "</div>");
+        $("#buttonSpan").html("<div class='row margin subheaderFont'>Compressions:</div>"+
+                              "<div class='row margin chestNums' id='compressions'>" + compressionCt +"</div>"+
+                              "<div class='row margin subheaderFont'>Sets:</div>"+
+                              "<div class='row margin chestNums' id='sets'>" + setCt + "</div>"+
+                              "<div class='row margin subheaderFont'>Pace:</div>"+
+                              "<div class='row margin chestNums' id='pace'>" + pace +"</div>");
         started = true
     }, 4000);
 
