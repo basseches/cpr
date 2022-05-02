@@ -411,4 +411,12 @@ th, td {
     padding-top: 10px;
     padding-bottom: 0px;
 }
+
+.italics{
+    font-style: italic;
+}
+
+.noTopPadding{
+    margin-top: 0px;
+}
 /**/
