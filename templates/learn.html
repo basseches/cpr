@@ -8,18 +8,26 @@
     let content = {{content|tojson}}
     let user = {{user|tojson}}
 </script>
-
-<div class="row">
-    <div class="alata headerFont bold quizHeader">{{content.title}}</div>
+<div class = "container">
+    <div class="row">
+        <div class="alata headerFont bold quizHeader">{{content.title}}</div>
+    </div>
+    <div class = "row">
+        <div class = "col-md">
+            {% include content.template %}
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col-md">
+            <div class="smallPadding"></div>
+    
+             <div class="row" id="btnrow"></div>
+    
+            <div class="padding"></div>
+    
+            <div id="confirm"></div>
+        </div>
+    </div>
+    
 </div>
-
-{% include content.template %}
-
-<div class="smallPadding"></div>
-
-<div class="row" id="btnrow"></div>
-
-<div class="padding"></div>
-
-<div id="confirm"></div>
 {% endblock %}
