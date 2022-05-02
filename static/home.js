@@ -17,6 +17,16 @@ function add_user(new_user){
     });
 }
 
+function check_name(name){
+    let nameTrim = name.trim()
+
+    if (nameTrim.length == 0){
+        return false;
+    } else{
+        return true;
+    }
+}
+
 $(document).ready(function(){
     
     $("#homenav").addClass("active");
@@ -36,7 +46,16 @@ $(document).ready(function(){
             "name": userName.value
         }
 
-        add_user(user)
+        let nameValid = check_name(userName.value);
+
+        if (nameValid){
+            add_user(user)
+            window.location.href = "/learn/1"
+        } else{
+            $("#nameCheck").text("Please enter your name above")
+            $("#nameCheck").addClass("tinyTopPadding")
+        }
+
     });
 
     $("#userName").keyup(function(event){
@@ -47,8 +66,15 @@ $(document).ready(function(){
                 "name": userName.value
             }
 
-            add_user(user)
-            window.location.href = "/learn/1"
+            let nameValid = check_name(userName.value);
+
+            if (nameValid){
+                add_user(user)
+                window.location.href = "/learn/1"
+            } else{
+                $("#nameCheck").text("Please enter your name above")
+                $("#nameCheck").addClass("tinyTopPadding")
+            }
         };
 
         event.stopPropagation();

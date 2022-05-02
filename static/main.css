@@ -406,4 +406,9 @@ th, td {
     bottom: 75px;
     left: 72px;
 }
+
+.tinyTopPadding{
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
 /**/
