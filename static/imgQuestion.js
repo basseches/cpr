@@ -34,33 +34,30 @@ function start_chest(startTime){
         success: function(result){
             let repNum = result["repNum"]
 
-            $("#chestText").empty()
+            $("#chestText").empty();
 
-            let compressionDiv = $("<div>")
-            $(compressionDiv).text("Compressions:")
-            $(compressionDiv).addClass("subheaderFont")
+            countdown(repNum);
+        },
+        error: function(request, status, error){
+            console.log("Error");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    });
+};
 
-            let compressionCount = $("<div>")
-            $(compressionCount).text(repNum)
-            $(compressionCount).attr("id", "quizCompCount")
-            $(compressionCount).addClass("chestNums")
+function start_reps(startTime){
+    $.ajax({
+        type: "PUT",
+        url: "/start_reps",                
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(startTime),
+        success: function(result){
+            let repNum = result["repNum"]
 
-            let compressionFeedback = $("<div>")
-            $(compressionFeedback).attr("id", "quizCompFeedback")
-            $(compressionFeedback).addClass("chestNums")
-
-            $("#chestText").append(compressionDiv)
-            $("#chestText").append(compressionCount)
-            $("#chestText").append("<br>")
-            $("#chestText").append("<br>")
-            $("#chestText").append(compressionFeedback)
-
-            // Add red circle on the chest maybe to indicate where the user should click
-            let redCircle = $("<span>")
-            $(redCircle).addClass("dot")
-            $(redCircle).addClass("redCircle")
-            $("#redChestCircle").append(redCircle)
-
+            console.log(repNum)
         },
         error: function(request, status, error){
             console.log("Error");
@@ -124,8 +121,6 @@ function verify_chest(questionInfo){
             let answerText = result["answerText"]
             let numCorrect = result["numCorrect"]
 
-            console.log(numCorrect)
-
             if (userCorrect === "Yes"){
                 $("#imgResult").text(answerText)
                 $("#imgResult").removeClass("redText")
@@ -155,17 +150,75 @@ function verify_chest(questionInfo){
 function startChest(){
     $("#startChestBtn").click(function() {
         startTime = {
-                        "questionID": curQuestion["id"],
-                        "startTime": Date.now()
+                        "questionID": curQuestion["id"]
                      };
 
         start_chest(startTime);
     });
 };
 
+function countdown(repNum){
+    $("#chestText").html("<div class='padding'><div class='chestNums'>Get ready!</div></div>");
+
+    setTimeout(function(){
+        $("#chestText").html("<div class='margin headerFont'>3</div>");
+    }, 1000);
+
+    setTimeout(function(){
+        $("#chestText").html("<div class='margin headerFont'>2</div>");
+    }, 2000);
+
+    setTimeout(function(){
+        $("#chestText").html("<div class='margin headerFont'>1</div>");
+    }, 3000);
+
+    setTimeout(function(){
+        $("#chestText").html("<div class='margin headerFont'>Go!</div>");
+    }, 4000);
+
+    setTimeout(function(){
+        $("#chestText").empty();
+
+        let compressionDiv = $("<div>");
+        $(compressionDiv).text("Compressions:");
+        $(compressionDiv).addClass("subheaderFont");
+
+        let compressionCount = $("<div>");
+        $(compressionCount).text(repNum);
+        $(compressionCount).attr("id", "quizCompCount");
+        $(compressionCount).addClass("chestNums");
+
+        let compressionFeedback = $("<div>");
+        $(compressionFeedback).attr("id", "quizCompFeedback");
+        $(compressionFeedback).addClass("chestNums");
+
+        $("#chestText").append(compressionDiv);
+        $("#chestText").append(compressionCount);
+        $("#chestText").append("<br>");
+        $("#chestText").append("<br>");
+        $("#chestText").append(compressionFeedback);
+
+        // Add red circle on the chest maybe to indicate where the user should click
+        let redCircle = $("<span>");
+        $(redCircle).addClass("dot");
+        $(redCircle).addClass("redCircle");
+        $("#redChestCircle").append(redCircle);
+
+        startReps();
+    }, 4500);
+};
+
+function startReps(){
+    let startTime = {
+                        "questionID": curQuestion["id"],
+                        "startTime": Date.now()
+                    };
+
+    start_reps(startTime);
+};
+
 function clickChest(){
     $("#redChestCircle").click(function () {
-        console.log("hi")
         clickTime = {
                         "questionID": curQuestion["id"],
                         "clickTime": Date.now()

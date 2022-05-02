@@ -54,8 +54,6 @@ function get_circles(){
         success: function(result){
             let circleColors = result["history"]
 
-            console.log(circleColors)
-
             circleColors.forEach(function (item, index) {
 				let circleNum = index + 1
 				$("#dot"+circleNum).addClass(item)

@@ -437,13 +437,30 @@ def start_chest():
 
     json_data = request.get_json()
     questionID = json_data["questionID"]
-    startTime = json_data["startTime"]
 
     userData[str(currentID)][quizName]["q" + questionID] = {
-                                                                "times": [startTime],
+                                                                "times": [],
                                                                 "curReps": 0,
                                                                 "numGood": 0
                                                             }
+
+    return jsonify(repNum = userData[str(currentID)][quizName]["q" + questionID]["curReps"])
+
+#-------------------------------------------------------------------------------
+
+@app.route('/start_reps', methods=['PUT'])
+def start_reps():
+    global currentID
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+    startTime = json_data["startTime"]
+
+    userData[str(currentID)][quizName]["q" + questionID]["times"].append(startTime)
 
     return jsonify(repNum = userData[str(currentID)][quizName]["q" + questionID]["curReps"])
 
