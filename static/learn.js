@@ -104,7 +104,7 @@ function makeCheckpoint() {
 
         // append checkpoint button
         let checkcol = $('<div class="col-md-2"></div>');
-        let checkbtndiv = $('<button class="alata greenBackground whiteText checkptbutton smallPadding mediumText" id="checkpoint">Checkpoint</button>');
+        let checkbtndiv = $('<button class="alata blueBackground whiteText checkptbutton smallPadding mediumText" id="checkpoint">Checkpoint</button>');
         $(checkcol).append(checkbtndiv);
         $("#btnrow").append(checkcol);
 

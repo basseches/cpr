@@ -60,6 +60,10 @@ body {
     font-family: Bebas Neue;
 }
 
+.baseColorBackground{
+    background-color: #d94334;
+}
+
 .greyBackground{
     background-color: grey;
 }
@@ -78,6 +82,12 @@ body {
 
 .lightgreyBackground{
     background-color: #F8F8F8;
+}
+
+.blueBackground{
+    /*background-color: #318CE7;*/
+    /*background-color: #357daf;*/
+    background-color: #4f95b6;
 }
 
 .whiteText{
@@ -313,7 +323,7 @@ th, td {
 
 .draggable {
     width: 165px;
-    background-color: #71BC78;
+    background-color: #4f95b6;
     color: #FFFFFF;
     padding: 10px;
     margin-top: 10px;
