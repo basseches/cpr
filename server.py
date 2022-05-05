@@ -109,7 +109,8 @@ quizQuestions = {
             "topic": "3",
             "correctAnswer": "Try to find an AED",
             "correctText": "You got it! The first thing you want to do is try to find an AED.",
-            "incorrectText": "Incorrect."
+            "incorrectText": "Incorrect.",
+            "halfText": "Nice try! You figured it out!"
          },
 
     "2": {
@@ -122,7 +123,8 @@ quizQuestions = {
             "topic": "4",
             "correctAnswer": "30",
             "correctText": "Yep! There are 30 chest compression in each set.",
-            "incorrectText": "Incorrect."
+            "incorrectText": "Incorrect.",
+            "halfText": "Nice try! You figured it out!"
          },
 
     "3": {
@@ -135,7 +137,8 @@ quizQuestions = {
             "topic": "4",
             "correctAnswer": 30,
             "correctText": "Way to go! You kept the perfect rate throughout the set.",
-            "incorrectText": "Incorrect." 
+            "incorrectText": "Incorrect.",
+            "halfText": "Nice try! You were close but just a little off the perfect rate."
          },
 
     "4": {
@@ -148,7 +151,8 @@ quizQuestions = {
             "topic": "5",
             "correctAnswer": "1 second",
             "correctText": "Correct! Each rescue breath should last for approximately 1 second.",
-            "incorrectText": "Incorrect."
+            "incorrectText": "Incorrect.",
+            "halfText": "Nice try! You figured it out!"
          }
 }
 
@@ -525,6 +529,11 @@ def verify_chest():
         answerText = quizQuestions[questionID]["correctText"]
         userData[str(currentID)][quizName]["score"] += 2
         userData[str(currentID)][quizName]["history"].append("greenBackground")
+    elif numGood >= 19:
+        userAnswerCorrect = "Half"
+        answerText = quizQuestions[questionID]["halfText"]
+        userData[str(currentID)][quizName]["score"] += 1
+        userData[str(currentID)][quizName]["history"].append("yellowBackground")
     else:
         userAnswerCorrect = "No"
         answerText = quizQuestions[questionID]["incorrectText"]

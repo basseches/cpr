@@ -124,14 +124,23 @@ function verify_chest(questionInfo){
             if (userCorrect === "Yes"){
                 $("#imgResult").text(answerText)
                 $("#imgResult").removeClass("redText")
+                $("#imgResult").removeClass("yellowText")
                 $("#imgResult").addClass("greenText")
 
                 $("#dot"+curQuestion["id"]).addClass("greenBackground")
             }else{
-                $("#imgResult").text(answerText)
-                $("#imgResult").addClass("redText")
+                if (userCorrect === "No"){
+                    $("#imgResult").text(answerText)
+                    $("#imgResult").addClass("redText")
 
-                $("#dot"+curQuestion["id"]).addClass("redBackground")
+                    $("#dot"+curQuestion["id"]).addClass("redBackground")
+                } else{
+                    $("#imgResult").text(answerText)
+                    $("#imgResult").addClass("yellowText")
+
+                    $("#dot"+curQuestion["id"]).addClass("yellowBackground")
+                }
+                
             }
 
             $("#nextQuestion").removeClass("isDisabled")
