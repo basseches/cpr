@@ -32,7 +32,7 @@ learnMaterial = {
         "id" : "3",
         "checkpoint": 1,
         "title" : "Preparatory steps",
-        "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911. Use an AED if accessible.", "Otherwise, begin manual CPR."],
+        "explanatoryText":["Step 1: Try to find an AED (automated external defibrillator).", "Step 2: Call 911.", "Step 3: Use an AED if accessible.", "Step 4: Begin manual CPR."],
         "template":"step3.html",
         "images": ["/static/prep1.png", "/static/perp2.png"],
         "imageSizes": ["300px", "200px"],
@@ -45,7 +45,7 @@ learnMaterial = {
         "id": "4",
         "checkpoint": 1,
         "title": "Chest compressions",
-        "explanatoryText" : ["Center your hands on the chest.", "Allow the chest to return to a normal position after each compression.", "Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees."],
+        "explanatoryText" : ["Center your hands on the chest.", "Allow the chest to return to a normal position after each compression.", "Complete one set, then continue on to perform rescue breaths.", "---", "TIP: Rhythm deaf? Just use the beat of Stayin' Alive by the Bee Gees."],
         "template":"step4.html",
         "images" : ["/static/compressionguide.png", "/static/compressions.gif"],
         "imageSizes": ["150px", "150px"],
@@ -57,7 +57,7 @@ learnMaterial = {
         "id": "5",
         "checkpoint": 1,
         "title": "Breaths",
-        "explanatoryText": ["Step 1: Open the airways.", "Step 2: Tilt their head back.", "Step 3: Lift their chin.", "Step 4: Administer 2 rescue breaths.", "The breaths should be approx 1 second in length.", "The chest should rise."],
+        "explanatoryText": ["Step 1: Tilt their head back.", "Step 2: Lift their chin.", "Step 3: Administer 2 rescue breaths.", "The breaths should be approx 1 second in length, and the chest should rise.", "---", "After administering rescue breaths, continue alternating between a set of compressions and two rescue breaths until help arrives."],
         "template" : "step5.html",
         "images": ["/static/breath1.gif", "/static/breath2.gif", "/static/breath3.gif"],
         "imageSizes": ["200px", "200px", "200px"],
@@ -138,7 +138,7 @@ quizQuestions = {
             "correctAnswer": 30,
             "correctText": "Way to go! You kept the perfect rate throughout the set.",
             "incorrectText": "Incorrect.",
-            "halfText": "Nice try! You were close but just a little off the perfect rate."
+            "halfText": "Nice try! Just a little off the perfect rate!"
          },
 
     "4": {
@@ -224,7 +224,6 @@ def quizQuestion(questionID = None):
 
     key = "q" + questionID
     if key in curUser[quizName]:
-        redir = ""
         if int(questionID) != 4:
             nextID = int(questionID) + 1
             return redirect(url_for("quizQuestion",questionID=nextID))

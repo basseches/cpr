@@ -21,5 +21,6 @@ $(document).ready(function(){
 
     $("#startQuizBtn").click(function() {
         add_quiz()
+        location.href = "/quiz/1"
     });
 });

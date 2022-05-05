@@ -73,7 +73,7 @@ body {
 }
 
 .yellowBackground{
-    background-color: #F0E68C;
+    background-color: #f9ec6f;
 }
 
 .redBackground{
@@ -107,7 +107,7 @@ body {
 }
 
 .yellowText{
-    color: #F0E68C;
+    color: #f1e25c;
 }
 
 .middleText{
@@ -158,11 +158,12 @@ body {
 
 .startQuiz{
     width: 280px;
-    border-width: 1px;
+    border-width: 0px;
 }
 
 .checkptbutton{
     width: 180px;
+    border-width: 0px;
 }
 
 .dot {
@@ -386,7 +387,7 @@ th, td {
 
 #box {
     position: absolute;
-    top: 325px;
+    top: 280px;
     right: 394px;
 }
 
@@ -404,7 +405,6 @@ th, td {
 }
 
 .active {
-    color: black;
     font-weight: bold;
 }
 

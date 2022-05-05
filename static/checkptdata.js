@@ -236,8 +236,8 @@ function generateChest() {
         countdown();
         // logTime();
     });
-    var prevTime;
-    var difference;
+    let prevTime;
+    let difference;
     $("#chestimg").click(function(){
         if (started) {
             compressionCt++;
@@ -247,23 +247,30 @@ function generateChest() {
                 $("#sets").html(setCt);
             }
             $("#pace").html(pace);
-            var date = new Date();
+            let date = new Date();
+            currentTime = date.getTime()
             if (compressionCt >= 2) {
                 currentTime = date.getTime()
                 difference = currentTime - prevTime;
                 console.log(difference);
                 prevTime = currentTime
                 if(difference >= 500 && difference <= 700) { 
-                    pace = "great pace!"
+                    pace = "Good"
                     $("#pace").html(pace)
+                    $("#pace").removeClass("redText")
+                    $("#pace").addClass("greenText")
                 }
                 else if (difference > 700){
-                    pace = "speed up!"
+                    pace = "Faster"
                     $("#pace").html(pace)
+                    $("#pace").removeClass("greenText")
+                    $("#pace").addClass("redText")
                 }
                 else{
-                    pace = "slow down!"
+                    pace = "Slower"
                     $("#pace").html(pace)
+                    $("#pace").removeClass("greenText")
+                    $("#pace").addClass("redText")
                 }
             }
             else
@@ -298,9 +305,8 @@ function countdown() {
         $("#buttonSpan").html("<div class='row margin subheaderFont'>Compressions:</div>"+
                               "<div class='row margin chestNums' id='compressions'>" + compressionCt +"</div>"+
                               "<div class='row margin subheaderFont'>Sets:</div>"+
-                              "<div class='row margin chestNums' id='sets'>" + setCt + "</div>"+
-                              "<div class='row margin subheaderFont'>Pace:</div>"+
-                              "<div class='row margin chestNums' id='pace'>" + pace +"</div>");
+                              "<div class='row margin chestNums' id='sets'>" + setCt + "</div>" +
+                              "<div class='row margin chestNums mediumText' id='pace'>" + pace +"</div>");
         started = true
     }, 4000);
 
@@ -336,14 +342,14 @@ function generateBreaths() {
     $("#images").append(curr);
 
     for (i = 1; i < 4; i++) {
-        curr = '<div id="circ' + i + '"><img src="/static/greencircle.png" class="circle' + i + '" id="head"></div>';
+        curr = '<div id="circ' + i + '"><img src="/static/bluecircle.png" class="circle' + i + '" id="head"></div>';
         $("#images").append(curr);
     }
 
     $("#circ1").click(function(){
         if (click1) {return;}
         click1 = true;
-        let newCirc = "<img src='/static/lightgreencircle.png' class='circle1 defCursor'>";
+        let newCirc = "<img src='/static/greencircle.png' class='circle1 defCursor'>";
         $("#circ1").html(newCirc);
         let box = "<div class='greybox' id='greybox'><div class='alata'>" + breathSteps[0] + "</div></div>";
         $("#box").append(box);
@@ -355,7 +361,7 @@ function generateBreaths() {
         if (click2) {return;}
         else if (click1) {
             click2 = true;
-            let newCirc = "<img src='/static/lightgreencircle.png' class='circle2 defCursor'>";
+            let newCirc = "<img src='/static/greencircle.png' class='circle2 defCursor'>";
             $("#circ2").html(newCirc);
             let text = "<div class='alata'>" + breathSteps[1] + "</div>";
             $("#greybox").append(text);
@@ -363,7 +369,7 @@ function generateBreaths() {
             let newCirc = "<img src='/static/redcircle.png' class='circle2'>";
             $("#circ2").html(newCirc);
             setTimeout(function(){
-                newCirc = "<div id='circ2'><img src='/static/greencircle.png' class='circle2'></div>";
+                newCirc = "<div id='circ2'><img src='/static/bluecircle.png' class='circle2'></div>";
                 $("#circ2").html(newCirc);
             }, 500);
         }
@@ -373,7 +379,7 @@ function generateBreaths() {
         if (click3) {return;}
         if (click1 && click2) {
             click3 = true;
-            let newCirc = "<img src='/static/lightgreencircle.png' class='circle3 defCursor'>";
+            let newCirc = "<img src='/static/greencircle.png' class='circle3 defCursor'>";
             $("#circ3").html(newCirc);
             let text = "<div class='alata'>" + breathSteps[2] + "</div>";
             $("#greybox").append(text);
@@ -381,7 +387,7 @@ function generateBreaths() {
             let newCirc = "<img src='/static/redcircle.png' class='circle3'>";
             $("#circ3").html(newCirc);
             setTimeout(function(){
-                newCirc = "<div id='circ2'><img src='/static/greencircle.png' class='circle3'></div>";
+                newCirc = "<div id='circ2'><img src='/static/bluecircle.png' class='circle3'></div>";
                 $("#circ3").html(newCirc);
             }, 500);
         }
