@@ -122,7 +122,7 @@ quizQuestions = {
             "img": "",
             "topic": "4",
             "correctAnswer": "30",
-            "correctText": "Yep! There are 30 chest compression in each set.",
+            "correctText": "Yep! There are 30 chest compressions in each set.",
             "incorrectText": "Incorrect.",
             "halfText": "Nice try! You figured it out!"
          },
@@ -198,6 +198,7 @@ def quizHome():
 @app.route('/quiz/<questionID>')
 def quizQuestion(questionID = None):
     global quizQuestions
+    global currentID
 
     curUser = userData[str(currentID)]
     curQuizAttempt = curUser["quizAttempt"]
@@ -224,11 +225,20 @@ def quizQuestion(questionID = None):
 
     key = "q" + questionID
     if key in curUser[quizName]:
-        if int(questionID) != 4:
-            nextID = int(questionID) + 1
-            return redirect(url_for("quizQuestion",questionID=nextID))
+        if question["textEntry"]:
+            curAttempt = curUser[quizName]["q" + questionID + "Attempt"]
+            firstTryResult = curUser[quizName]["q" + questionID + "FirstTryResult"]
+
+            if curAttempt > 2 or firstTryResult:
+                nextID = int(questionID) + 1
+                return redirect(url_for("quizQuestion",questionID=nextID))
+
         else:
-            return redirect(url_for("quizEnd"))
+            if int(questionID) != 4:
+                nextID = int(questionID) + 1
+                return redirect(url_for("quizQuestion",questionID=nextID))
+            else:
+                return redirect(url_for("quizEnd"))
 
     if question["mc"]:
         return render_template('mcQuestion.html', question = question)
@@ -335,23 +345,56 @@ def add_text():
     answer = json_data["answer"]
     topic = json_data["topic"]
 
+    curAttempt = curUser[quizName]["q" + questionID + "Attempt"]
     curUser[quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
-    if correctAnswer == answer:
-        userAnswerCorrect = "Yes"
-        answerText = quizQuestions[questionID]["correctText"]
-        curUser[quizName]["score"] += 2
-        curUser[quizName]["history"].append("greenBackground")
+    if curAttempt == 1:
+        if correctAnswer == answer:
+            userAnswerCorrect = "Yes"
+            answerText = quizQuestions[questionID]["correctText"]
+            curUser[quizName]["score"] += 2
+            curUser[quizName]["history"].append("greenBackground")
+
+            questionDone = "Yes"
+            secondTry = "No"
+
+            curUser[quizName]["q" + questionID + "FirstTryResult"] = True
+
+        else:
+            userAnswerCorrect = "No"
+            answerText = quizQuestions[questionID]["incorrectText"]
+
+            userData[str(currentID)][quizName]["q" + questionID + "Attempt"] += 1
+            questionDone = "No"
+            secondTry = "No"
+
+            curUser[quizName]["q" + questionID + "FirstTryResult"] = False
+
     else:
-        userAnswerCorrect = "No"
-        answerText = quizQuestions[questionID]["incorrectText"]
+        questionDone = "Yes"
         curUser[quizName]["areasImprove"].append(topic)
         curUser[quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
-        curUser[quizName]["history"].append("redBackground")
 
-    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText)
+        userData[str(currentID)][quizName]["q" + questionID + "Attempt"] += 1
+
+        if correctAnswer == answer:
+            userAnswerCorrect = "Yes"
+            answerText = quizQuestions[questionID]["halfText"]
+            curUser[quizName]["score"] += 1
+            curUser[quizName]["history"].append("yellowBackground")
+
+            secondTry = "Yes"
+
+        else:
+            userAnswerCorrect = "No"
+            answerText = quizQuestions[questionID]["incorrectText"]
+            curUser[quizName]["history"].append("redBackground")    
+
+            secondTry = "No"
+
+    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, questionDone = questionDone, secondTry = secondTry)
 
 #--------------------------------------------------------------------
 
@@ -532,6 +575,8 @@ def verify_chest():
         userAnswerCorrect = "Half"
         answerText = quizQuestions[questionID]["halfText"]
         userData[str(currentID)][quizName]["score"] += 1
+        userData[str(currentID)][quizName]["areasImprove"].append(topic)
+        userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
         userData[str(currentID)][quizName]["history"].append("yellowBackground")
     else:
         userAnswerCorrect = "No"
@@ -541,6 +586,25 @@ def verify_chest():
         userData[str(currentID)][quizName]["history"].append("redBackground")
 
     return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, numCorrect = numGood)
+
+#--------------------------------------------------------------------------------------
+
+@app.route('/start_text', methods=['PUT'])
+def start_text():
+    global userData
+
+    curQuizAttempt = userData[str(currentID)]["quizAttempt"]
+    quizName = "quiz" + str(curQuizAttempt)
+
+    json_data = request.get_json()
+    questionID = json_data["questionID"]
+
+    attemptName = "q" + questionID + "Attempt"
+
+    if attemptName not in userData[str(currentID)][quizName]:
+        userData[str(currentID)][quizName][attemptName] = 1   
+
+    return jsonify(attemptNumber = userData[str(currentID)][quizName][attemptName])
 
 #----------------------------------------------------------------------------
 #SEARCH FUNCTIONALITY

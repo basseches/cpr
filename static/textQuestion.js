@@ -8,21 +8,41 @@ function add_text(answer){
         success: function(result){
             let userCorrect = result["userCorrect"]
             let answerText = result["answerText"]
+            let questionDone = result["questionDone"]
+            let secondTry = result["secondTry"]
 
             if (userCorrect === "Yes"){
-            	$("#textResult").text(answerText)
-            	$("#textResult").removeClass("redText")
-            	$("#textResult").addClass("greenText")
+            	if (secondTry === "No"){
+            		$("#textResult").text(answerText)
+	            	$("#textResult").removeClass("redText")
+	            	$("#textResult").removeClass("yellowText")
+	            	$("#textResult").addClass("greenText")
 
-            	$("#dot"+curQuestion["id"]).addClass("greenBackground")
+	            	$("#dot"+curQuestion["id"]).addClass("greenBackground")
+
+            	} else{
+            		$("#textResult").text(answerText)
+	            	$("#textResult").removeClass("redText")
+	            	$("#textResult").removeClass("greenText")
+	            	$("#textResult").addClass("yellowText")
+
+	            	$("#dot"+curQuestion["id"]).removeClass("redBackground")
+	            	$("#dot"+curQuestion["id"]).addClass("yellowBackground")
+            	}
+            	
             }else{
             	$("#textResult").text(answerText)
             	$("#textResult").addClass("redText")
             	$("#dot"+curQuestion["id"]).addClass("redBackground")
             }
 
-            $("#nextQuestion").removeClass("isDisabled")
-            $("#userText").attr("disabled", true)
+            if (questionDone === "Yes"){
+            	$("#nextQuestion").removeClass("isDisabled")
+            	$("#userText").attr("disabled", true)
+            } else{
+            	$("#userText").focus()
+            }
+
         },
         error: function(request, status, error){
             console.log("Error");
@@ -56,6 +76,34 @@ function get_circles(){
         }
     });
 };
+
+
+function start_text(question){
+	$.ajax({
+        type: "PUT",
+        url: "/start_text",                
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(question),
+        success: function(result){
+            let attemptNumber = result["attemptNumber"]
+            
+            if (attemptNumber >= 2){
+            	$("#dot"+curQuestion["id"]).addClass("redBackground")
+            } else{
+            	
+            }
+        },
+        error: function(request, status, error){
+            console.log("Error");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    });
+};
+
+// ----------------------------------------------
 
 function verifyNumber(textEntry){
 	let isNotNumber = isNaN(textEntry)
@@ -91,6 +139,14 @@ function getAnswer(){
 	});
 };
 
+function startText(){
+	let questionInfo = {
+							"questionID": curQuestion["id"]
+					   };
+
+	start_text(questionInfo)
+}
+
 $(document).ready(function(){
 	$("#quiznav").addClass("active");
 
@@ -119,5 +175,6 @@ $(document).ready(function(){
 	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 	$("#userText").focus()
 	get_circles()
+	startText()
 	getAnswer()
 });
