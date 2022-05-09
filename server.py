@@ -208,16 +208,21 @@ def quizQuestion(questionID = None):
     quizName = "quiz" + str(curQuizAttempt)
 
     if (int(questionID) == 4) and (len(curUser[quizName]["history"]) == 2):
-        print("inside if")
         numGood = curUser[quizName]["q3"]["numGood"]
         if numGood >= 25:
             userAnswerCorrect = "Yes"
-            answerText = quizQuestions[questionID]["correctText"]
+            answerText = quizQuestions["3"]["correctText"]
             userData[str(currentID)][quizName]["score"] += 2
             userData[str(currentID)][quizName]["history"].append("greenBackground")
+        elif numGood >= 19:
+            userAnswerCorrect = "No"
+            answerText = quizQuestions["3"]["incorrectText"]
+            userData[str(currentID)][quizName]["areasImprove"].append("4")
+            userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
+            userData[str(currentID)][quizName]["history"].append("redBackground")
         else:
             userAnswerCorrect = "No"
-            answerText = quizQuestions[questionID]["incorrectText"]
+            answerText = quizQuestions["3"]["incorrectText"]
             userData[str(currentID)][quizName]["areasImprove"].append("4")
             userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
             userData[str(currentID)][quizName]["history"].append("redBackground")
