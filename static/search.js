@@ -11,14 +11,6 @@ function display_search(titles, content, num, searched){
         $("#searched").append(results)
     } else {
 
-        if (num == 1) {
-            let results = $("<div class='subheaderFont'>1 result found.</div>")
-            $("#searched").append(results)
-        } else {
-            let results = $("<div class='subheaderFont'>" + num + " results found.</div>")
-            $("#searched").append(results)
-        }
-
         let titlediv = $("<div class='alata mediumText'>Title search results:</div>")
         $("#title").append(titlediv)
         searchTitle(titles)

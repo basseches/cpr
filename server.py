@@ -123,8 +123,8 @@ quizQuestions = {
             "topic": "4",
             "correctAnswer": "30",
             "correctText": "Yep! There are 30 chest compressions in each set.",
-            "incorrectText1": "Try 1 out of 2: Incorrect.",
-            "incorrectText2": "Try 2 out of 2: Incorrect.",
+            "incorrectText1": "Try again!",
+            "incorrectText2": "Incorrect.",
             "halfText": "Nice try! You figured it out!"
          },
 
