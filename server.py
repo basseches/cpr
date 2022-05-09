@@ -237,9 +237,13 @@ def quizQuestion(questionID = None):
             curAttempt = curUser[quizName]["q" + questionID + "Attempt"]
             firstTryResult = curUser[quizName]["q" + questionID + "FirstTryResult"]
 
-            if curAttempt > 2 or firstTryResult:
-                nextID = int(questionID) + 1
-                return redirect(url_for("quizQuestion",questionID=nextID))
+            if int(questionID) != 4:
+                if curAttempt > 2 or firstTryResult:
+                    nextID = int(questionID) + 1
+                    return redirect(url_for("quizQuestion",questionID=nextID))
+            else:
+                if curAttempt > 2 or firstTryResult:
+                    return redirect(url_for("quizEnd"))
 
         else:
             if int(questionID) != 4:
