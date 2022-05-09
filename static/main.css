@@ -432,4 +432,14 @@ th, td {
 .noTopPadding{
     margin-top: 0px;
 }
+
+.textSubmit{
+    height: 50px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-left: 18px;
+    text-align: center;
+    font-size: 20px;
+    border-width: 0px;
+}
 /**/

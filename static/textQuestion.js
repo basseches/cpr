@@ -39,6 +39,7 @@ function add_text(answer){
             if (questionDone === "Yes"){
             	$("#nextQuestion").removeClass("isDisabled")
             	$("#userText").attr("disabled", true)
+            	$("#textSubmitBtn").addClass("isDisabled")
             } else{
             	$("#userText").focus()
             }
@@ -91,7 +92,7 @@ function start_text(question){
             if (attemptNumber >= 2){
             	$("#dot"+curQuestion["id"]).addClass("redBackground")
             } else{
-            	
+
             }
         },
         error: function(request, status, error){
@@ -131,12 +132,24 @@ function getAnswer(){
 		if(keycode == '13'){
 			if (verifyNumber(userText.value)){
 				add_text(userAnswer)	
-			}
+			};
 			
-		}
+		};
 
 		event.stopPropagation();
 	});
+
+	$("#textSubmitBtn").click(function () {
+		let userAnswer = {
+							"questionID": curQuestion["id"],
+							"answer": userText.value,
+							"topic": curQuestion["topic"]
+					 	 };
+
+        if (verifyNumber(userText.value)){
+			add_text(userAnswer)	
+		};
+    });
 };
 
 function startText(){
