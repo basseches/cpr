@@ -79,10 +79,10 @@ function get_circles(){
 };
 
 
-function start_text(question){
+function start_question(question){
 	$.ajax({
         type: "PUT",
-        url: "/start_text",                
+        url: "/start_question",                
         dataType : "json",
         contentType: "application/json; charset=utf-8",
         data : JSON.stringify(question),
@@ -157,7 +157,7 @@ function startText(){
 							"questionID": curQuestion["id"]
 					   };
 
-	start_text(questionInfo)
+	start_question(questionInfo)
 }
 
 $(document).ready(function(){
