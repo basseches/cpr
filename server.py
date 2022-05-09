@@ -109,7 +109,8 @@ quizQuestions = {
             "topic": "3",
             "correctAnswer": "Try to find an AED",
             "correctText": "You got it! The first thing you want to do is try to find an AED.",
-            "incorrectText": "Incorrect.",
+            "incorrectText1": "Try again!",
+            "incorrectText2": "Incorrect.",
             "halfText": "Nice try! You figured it out!"
          },
 
@@ -152,7 +153,8 @@ quizQuestions = {
             "topic": "5",
             "correctAnswer": "1 second",
             "correctText": "Correct! Each rescue breath should last for approximately 1 second.",
-            "incorrectText": "Incorrect.",
+            "incorrectText1": "Try again!",
+            "incorrectText2": "Incorrect.",
             "halfText": "Nice try! You figured it out!"
          }
 }
@@ -226,7 +228,7 @@ def quizQuestion(questionID = None):
 
     key = "q" + questionID
     if key in curUser[quizName]:
-        if question["textEntry"]:
+        if question["textEntry"] or question["mc"]:
             curAttempt = curUser[quizName]["q" + questionID + "Attempt"]
             firstTryResult = curUser[quizName]["q" + questionID + "FirstTryResult"]
 
@@ -299,7 +301,7 @@ def add_quiz():
 
 @app.route('/add_mc', methods=['PUT'])
 def add_mc():
-
+    global currentID
     global userData
 
     curUser = userData[str(currentID)]
@@ -312,23 +314,56 @@ def add_mc():
     answerID = json_data["answerID"]
     topic = json_data["topic"]
 
+    curAttempt = curUser[quizName]["q" + questionID + "Attempt"]
     curUser[quizName]["q" + questionID] = answer
 
     correctAnswer = quizQuestions[questionID]["correctAnswer"]
 
-    if correctAnswer == answer:
-        userAnswerCorrect = "Yes"
-        answerText = quizQuestions[questionID]["correctText"]
-        curUser[quizName]["score"] += 2
-        curUser[quizName]["history"].append("greenBackground")
+    if curAttempt == 1:
+        if correctAnswer == answer:
+            userAnswerCorrect = "Yes"
+            answerText = quizQuestions[questionID]["correctText"]
+            curUser[quizName]["score"] += 2
+            curUser[quizName]["history"].append("greenBackground")
+
+            questionDone = "Yes"
+            secondTry = "No"
+
+            curUser[quizName]["q" + questionID + "FirstTryResult"] = True
+        else:
+            userAnswerCorrect = "No"
+            answerText = quizQuestions[questionID]["incorrectText1"]
+
+            userData[str(currentID)][quizName]["q" + questionID + "Attempt"] += 1
+            questionDone = "No"
+            secondTry = "No"
+
+            curUser[quizName]["q" + questionID + "FirstTryResult"] = False
+            curUser[quizName]["q" + questionID + "FirstGuess"] = answerID
+
     else:
-        userAnswerCorrect = "No"
-        answerText = quizQuestions[questionID]["incorrectText"]
+        questionDone = "Yes"
         curUser[quizName]["areasImprove"].append(topic)
         curUser[quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
-        curUser[quizName]["history"].append("redBackground")
 
-    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID)
+        userData[str(currentID)][quizName]["q" + questionID + "Attempt"] += 1
+
+        if correctAnswer == answer:
+            userAnswerCorrect = "Yes"
+            answerText = quizQuestions[questionID]["halfText"]
+            curUser[quizName]["score"] += 1
+            curUser[quizName]["history"].append("yellowBackground")
+
+            secondTry = "Yes"
+
+        else:
+            userAnswerCorrect = "No"
+            answerText = quizQuestions[questionID]["incorrectText2"]
+            curUser[quizName]["history"].append("redBackground")    
+
+            secondTry = "No"
+
+    return jsonify(userCorrect = userAnswerCorrect, answerText = answerText, answerID = answerID, questionDone = questionDone, secondTry = secondTry)
 
 #----------------------------------------------------------
 
@@ -599,13 +634,22 @@ def start_question():
 
     json_data = request.get_json()
     questionID = json_data["questionID"]
+    question = quizQuestions[questionID]
 
     attemptName = "q" + questionID + "Attempt"
+    firstGuess = "q" + questionID + "FirstGuess"
 
     if attemptName not in userData[str(currentID)][quizName]:
-        userData[str(currentID)][quizName][attemptName] = 1   
+        userData[str(currentID)][quizName][attemptName] = 1
 
-    return jsonify(attemptNumber = userData[str(currentID)][quizName][attemptName])
+    if question["mc"]:
+        if attemptName not in userData[str(currentID)][quizName]:
+            userData[str(currentID)][quizName][firstGuess] = -1
+            userData[str(currentID)][quizName]["q" + questionID + "FirstTryResult"] = False
+
+        return jsonify(attemptNumber = userData[str(currentID)][quizName][attemptName], firstGuess = userData[str(currentID)][quizName][firstGuess])
+    else:
+        return jsonify(attemptNumber = userData[str(currentID)][quizName][attemptName])
 
 #----------------------------------------------------------------------------
 #SEARCH FUNCTIONALITY

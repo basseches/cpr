@@ -10,31 +10,48 @@ function add_mc(answer){
             let answerText = result["answerText"]
             let choiceID = result["answerID"]
             let buttonID = "#q" + curQuestion["id"] + "c" + choiceID
+            let questionDone = result["questionDone"]
+            let secondTry = result["secondTry"]
 
             if (userCorrect === "Yes"){
-            	$(buttonID).removeClass("lightgreyBackground")
-            	$(buttonID).addClass("greenBackground")
-            	$("#mcResult").text(answerText)
-            	$("#mcResult").addClass("greenText")
+            	if (secondTry === "No"){
+            		$(buttonID).removeClass("lightgreyBackground")
+		        	$(buttonID).addClass("greenBackground")
+		        	$("#mcResult").text(answerText)
+		        	$("#mcResult").addClass("greenText")
 
-            	$("#dot"+curQuestion["id"]).addClass("greenBackground")
-            }else{
+		        	$("#dot"+curQuestion["id"]).addClass("greenBackground")
+            	} else{
+            		$(buttonID).removeClass("lightgreyBackground")
+		        	$(buttonID).addClass("greenBackground")
+		        	$("#mcResult").text(answerText)
+		        	$("#mcResult").removeClass("redText")
+		        	$("#mcResult").addClass("yellowText")
+
+		        	$("#dot"+curQuestion["id"]).removeClass("redBackground")
+	            	$("#dot"+curQuestion["id"]).addClass("yellowBackground")
+            	}
+
+            } else{
             	$(buttonID).removeClass("lightgreyBackground")
             	$(buttonID).addClass("redBackground")
+            	$(buttonID).attr("disabled", true)
             	$("#mcResult").text(answerText)
             	$("#mcResult").addClass("redText")
 
             	$("#dot"+curQuestion["id"]).addClass("redBackground")
             }
 
+            if (questionDone === "Yes"){
+            	$("#nextQuestion").removeClass("isDisabled");
 
-            $("#nextQuestion").removeClass("isDisabled")
+            	let choices = curQuestion["categories"];
 
-            let choices = curQuestion["categories"]
+            	choices.forEach(function (item, index) {
+					$("#q" + curQuestion["id"] + "c" + index).attr("disabled", true)
+				});
 
-			choices.forEach(function (item, index) {
-				$("#q" + curQuestion["id"] + "c" + index).attr("disabled", true)
-			});
+            };       
         },
         error: function(request, status, error){
             console.log("Error");
@@ -68,6 +85,40 @@ function get_circles(){
         }
     });
 };
+
+function start_question(question){
+	$.ajax({
+        type: "PUT",
+        url: "/start_question",                
+        dataType : "json",
+        contentType: "application/json; charset=utf-8",
+        data : JSON.stringify(question),
+        success: function(result){
+            let attemptNumber = result["attemptNumber"]
+            let firstGuessIndex = result["firstGuess"]
+            
+            if (attemptNumber >= 2){
+            	$("#dot"+curQuestion["id"]).addClass("redBackground")
+
+            	let firstGuessButton = "#q" + curQuestion["id"] + "c" + firstGuessIndex
+            	$(firstGuessButton).removeClass("lightgreyBackground")
+            	$(firstGuessButton).addClass("redBackground")
+
+            	$(firstGuessButton).attr("disabled", true)
+            } else{
+
+            }
+        },
+        error: function(request, status, error){
+            console.log("Error");
+            console.log(request)
+            console.log(status)
+            console.log(error)
+        }
+    });
+};
+
+// -------------------------------------------------------------------------------------
 
 function getAnswer(){
 	let choices = curQuestion["categories"]
@@ -104,7 +155,15 @@ function displayChoices(){
 		$(choiceDiv).append(choiceButton)
 		$("#mcChoices").append(choiceDiv)
 	});
-}
+};
+
+function startMC(){
+	let questionInfo = {
+							"questionID": curQuestion["id"]
+					   };
+
+	start_question(questionInfo);
+};
 
 $(document).ready(function(){
 	$("#quiznav").addClass("active");
@@ -134,5 +193,6 @@ $(document).ready(function(){
 	$("#reviewMaterialQuiz").attr("href", "/learn/" + curQuestion["topic"])
 
 	get_circles()
+	startMC()
 	getAnswer()
 })
