@@ -123,7 +123,8 @@ quizQuestions = {
             "topic": "4",
             "correctAnswer": "30",
             "correctText": "Yep! There are 30 chest compressions in each set.",
-            "incorrectText": "Incorrect.",
+            "incorrectText1": "Try 1 out of 2: Incorrect.",
+            "incorrectText2": "Try 2 out of 2: Incorrect.",
             "halfText": "Nice try! You figured it out!"
          },
 
@@ -364,7 +365,7 @@ def add_text():
 
         else:
             userAnswerCorrect = "No"
-            answerText = quizQuestions[questionID]["incorrectText"]
+            answerText = quizQuestions[questionID]["incorrectText1"]
 
             userData[str(currentID)][quizName]["q" + questionID + "Attempt"] += 1
             questionDone = "No"
@@ -389,7 +390,7 @@ def add_text():
 
         else:
             userAnswerCorrect = "No"
-            answerText = quizQuestions[questionID]["incorrectText"]
+            answerText = quizQuestions[questionID]["incorrectText2"]
             curUser[quizName]["history"].append("redBackground")    
 
             secondTry = "No"
