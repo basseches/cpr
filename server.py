@@ -590,8 +590,8 @@ def verify_chest():
 
 #--------------------------------------------------------------------------------------
 
-@app.route('/start_text', methods=['PUT'])
-def start_text():
+@app.route('/start_question', methods=['PUT'])
+def start_question():
     global userData
 
     curQuizAttempt = userData[str(currentID)]["quizAttempt"]
