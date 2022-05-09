@@ -216,10 +216,11 @@ def quizQuestion(questionID = None):
             userData[str(currentID)][quizName]["history"].append("greenBackground")
         elif numGood >= 19:
             userAnswerCorrect = "No"
-            answerText = quizQuestions["3"]["incorrectText"]
+            answerText = quizQuestions["3"]["halfText"]
+            userData[str(currentID)][quizName]["score"] += 1
             userData[str(currentID)][quizName]["areasImprove"].append("4")
             userData[str(currentID)][quizName]["areasImprove"] = list(set(userData[str(currentID)][quizName]["areasImprove"]))
-            userData[str(currentID)][quizName]["history"].append("redBackground")
+            userData[str(currentID)][quizName]["history"].append("yellowBackground")
         else:
             userAnswerCorrect = "No"
             answerText = quizQuestions["3"]["incorrectText"]
