@@ -252,7 +252,6 @@ function generateChest() {
             if (compressionCt >= 2) {
                 currentTime = date.getTime()
                 difference = currentTime - prevTime;
-                console.log(difference);
                 prevTime = currentTime
                 if(difference >= 500 && difference <= 700) { 
                     pace = "Good"
@@ -325,6 +324,8 @@ function refreshChest() {
 
     compressionCt = 0;
     setCt = 0;
+    started = false;
+    pace = "";
 
     generateChest();
 
