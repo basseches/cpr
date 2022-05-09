@@ -649,7 +649,7 @@ def start_question():
         userData[str(currentID)][quizName][attemptName] = 1
 
     if question["mc"]:
-        if attemptName not in userData[str(currentID)][quizName]:
+        if firstGuess not in userData[str(currentID)][quizName]:
             userData[str(currentID)][quizName][firstGuess] = -1
             userData[str(currentID)][quizName]["q" + questionID + "FirstTryResult"] = False
 
